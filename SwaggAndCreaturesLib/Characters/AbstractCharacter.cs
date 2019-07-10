@@ -5,17 +5,43 @@ namespace SwaggAndCreaturesLib.Characters
     public abstract class AbstractCharacter : ICharacter
     {
         private const double DEFAULT_ATK = 1;
+        public static readonly int MAX_INITIATIVE = 1000;
 
-        public double Health { get; set; }
         protected IWeapon Weapon = null;
+        private CharacterStats Stats;
 
-        protected AbstractCharacter(double health) => Health = health;
+        public double Health
+        {
+            get { return Stats.Health; }
+            private set { Stats.Health = value; }
+        }
+
+        public int Agility
+        {
+            get { return Stats.Agility; }
+            private set { Stats.Agility = value; }
+        }
+
+        public int Initiative
+        {
+            get { return Stats.Initiative; }
+            private set { Stats.Initiative = value; }
+        }
+
+        protected AbstractCharacter(double health, int agility)
+        {
+            Stats = new CharacterStats(health, agility);
+        }
 
         public void EquipWeapon(IWeapon weapon) => Weapon = weapon;
 
         public void UnequipWeapon() => Weapon = null;
 
-        public double Attack() => Weapon == null ? DEFAULT_ATK : Weapon.Attack();
+        public double Attack()
+        {
+            Initiative = 0;
+            return Weapon == null ? DEFAULT_ATK : Weapon.Attack();
+        }
 
         public void Block(double amount)
         {
@@ -27,5 +53,14 @@ namespace SwaggAndCreaturesLib.Characters
         }
 
         public bool IsDead() => Health <= 0.0;
+
+        public void IncreaseInitiative()
+        {
+            Initiative += Agility;
+            if (Initiative > MAX_INITIATIVE)
+            {
+                Initiative = MAX_INITIATIVE;
+            }
+        }
     }
 }

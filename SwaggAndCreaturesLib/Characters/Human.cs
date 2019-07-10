@@ -2,6 +2,6 @@
 {
     public class Human : AbstractCharacter
     {
-        public Human(double health) : base(health) { }
+        public Human(double health, int agility) : base(health, agility) { }
     }
 }

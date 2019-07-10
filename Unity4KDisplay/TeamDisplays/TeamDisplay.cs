@@ -24,6 +24,7 @@ namespace Unity4KDisplay
             builder.AddMultiple(4, CharactersStrings.BODY);
             builder.AddMultiple(4, CharactersStrings.LEGS);
             builder.AddHP(team);
+            builder.AddInitiative(team);
             return builder.ToString();
         }
 

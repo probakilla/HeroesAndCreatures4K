@@ -38,6 +38,15 @@ namespace Unity4KDisplay.TeamDisplays
             builder.AppendLine();
         }
 
+        public static void AddInitiative(this StringBuilder builder, List<ICharacter> team)
+        {
+            foreach (ICharacter character in team)
+            {
+                builder.Append(InitiativeDisplayString(character));
+            }
+            builder.AppendLine();
+        }
+
         public static void AddSlotNumber(this StringBuilder builder, int teamLength)
         {
             for (int i = 0; i < teamLength; ++i)
@@ -52,6 +61,18 @@ namespace Unity4KDisplay.TeamDisplays
             string displayString = "  HP:";
             string hp = character.Health.ToString("F0");
             displayString += hp;
+            if (displayString.Length < CharactersStrings.CHARACTER_SLOT_LENGTH)
+            {
+                displayString = displayString.PadRight(CharactersStrings.CHARACTER_SLOT_LENGTH);
+            }
+            return displayString;
+        }
+
+        private static string InitiativeDisplayString(ICharacter character)
+        {
+            string displayString = " I:";
+            string initiative = character.Initiative.ToString();
+            displayString += initiative;
             if (displayString.Length < CharactersStrings.CHARACTER_SLOT_LENGTH)
             {
                 displayString = displayString.PadRight(CharactersStrings.CHARACTER_SLOT_LENGTH);
