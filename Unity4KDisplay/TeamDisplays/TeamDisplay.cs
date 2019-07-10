@@ -11,7 +11,7 @@ namespace Unity4KDisplay
         {
             StringBuilder builder = new StringBuilder();
             builder.AppendLine();
-            builder.AddSlotNumber(4);
+            builder.AddSlotNumber(4, isPlayer);
             if (isPlayer)
             {
                 builder.AddMultiple(4, CharactersStrings.BACK);

@@ -47,11 +47,12 @@ namespace Unity4KDisplay.TeamDisplays
             builder.AppendLine();
         }
 
-        public static void AddSlotNumber(this StringBuilder builder, int teamLength)
+        public static void AddSlotNumber(this StringBuilder builder, int teamLength, bool isPlayer)
         {
             for (int i = 0; i < teamLength; ++i)
             {
-                builder.AppendFormat(CharactersStrings.NB_SLOT, i + 1);
+                int slot = isPlayer ? (i + 1) + 4 : i + 1;
+                builder.AppendFormat(CharactersStrings.NB_SLOT, slot);
             }
             builder.AppendLine().AppendLine();
         }

@@ -5,7 +5,7 @@ namespace SwaggAndCreaturesLib.Characters
     public abstract class AbstractCharacter : ICharacter
     {
         private const double DEFAULT_ATK = 1;
-        public static readonly int MAX_INITIATIVE = 1000;
+        public static readonly int MAX_INITIATIVE = 2000;
 
         protected IWeapon Weapon = null;
         private CharacterStats Stats;
