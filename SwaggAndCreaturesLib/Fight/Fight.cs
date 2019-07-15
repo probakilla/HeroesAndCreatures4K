@@ -1,4 +1,5 @@
-﻿using SwaggAndCreaturesLib.User;
+﻿using SwaggAndCreaturesLib.Characters;
+using SwaggAndCreaturesLib.User;
 using System.Linq;
 
 namespace SwaggAndCreaturesLib.Fight
@@ -14,6 +15,18 @@ namespace SwaggAndCreaturesLib.Fight
         {
             Computer = computer;
             Player = player;
+            DisplayCharacter();
+        }
+
+        public void DisplayCharacter()
+        {
+            for(int i = 0; i < Computer.Team.Count; ++i)
+            {
+                var cpu = (CharacterConsoleDisplay)Computer.Team[i];
+                cpu.DrawCharacter();
+                var player = (CharacterConsoleDisplay)Player.Team[i];
+                player.DrawCharacter();
+            }
         }
 
         public void StartFight()
@@ -52,18 +65,18 @@ namespace SwaggAndCreaturesLib.Fight
             int playerCharInit = Player.GetNextToAttack().Initiative;
             if (computerCharInit > playerCharInit)
             {
-                Computer.Play();
+                Computer.Play(Player.Team);
             }
             else
             {
-                Player.Play();
+                Player.Play(Computer.Team);
             }
         }
 
         private bool GameOver()
         {
-            int playerCount = Player.Team.Where(character => character.IsDead()).ToList().Count;
-            int computerCount = Computer.Team.Where(character => character.IsDead()).ToList().Count;
+            int playerCount = Player.Team.Where(character => !character.IsDead()).ToList().Count;
+            int computerCount = Computer.Team.Where(character => !character.IsDead()).ToList().Count;
             return playerCount == 0 || computerCount == 0;
         }
     }

@@ -15,5 +15,10 @@ namespace SwaggAndCreaturesLib.User
         public void IncreaseAllInitiative() => Team.ForEach(character => character.IncreaseInitiative());
 
         public abstract void Play(List<ICharacter> oppositeTeam);
+
+        protected bool IsTargetValid(List<ICharacter> team, int target)
+        {
+            return !team[target].IsDead();
+        }
     }
 }

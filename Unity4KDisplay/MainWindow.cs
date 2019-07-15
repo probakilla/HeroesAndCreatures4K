@@ -1,4 +1,6 @@
 ﻿using SwaggAndCreaturesLib.Characters;
+using SwaggAndCreaturesLib.Fight;
+using SwaggAndCreaturesLib.User;
 using System;
 using System.Collections.Generic;
 
@@ -7,20 +9,30 @@ namespace Unity4KDisplay
     public static class MainWindow
     {
 
-        public static void Main(string[] args)
+        private static void TestCharacterDraw()
         {
-            ConsoleDisplay display = ConsoleDisplay.Instance;
-            display.Launch();
+            List<ICharacter> computerTeam = RandomTeam(4, false);
+            List<ICharacter> playerTeam = RandomTeam(4, true);
+            IUser cpu = new Computer(computerTeam);
+            IUser player = new Player(playerTeam);
+            Fight fight = new Fight(cpu, player);
+            fight.StartFight();
         }
 
-        private static List<ICharacter> RandomTeam(int teamLength)
+        public static void Main(string[] args)
+        {
+            TestCharacterDraw();
+        }
+
+        private static List<ICharacter> RandomTeam(int teamLength, bool isPlayerTeam)
         {
             List<ICharacter> team = new List<ICharacter>();
             for (int i = 0; i < teamLength; ++i)
             {
                 double randomHealth = GenerateRandomDouble(0.0, 100.0);
                 int randomAgility = GenerateRandomInteger(0, 100);
-                team.Add(new Human(randomHealth, randomAgility));
+                int characterPlace = (isPlayerTeam) ? i + 4 : i;
+                team.Add(new CharacterConsoleDisplay((int)randomHealth, randomAgility, characterPlace));
             }
             return team;
         }
@@ -35,8 +47,7 @@ namespace Unity4KDisplay
         private static int GenerateRandomInteger(int min, int max)
         {
             Random rand = new Random();
-            int next = rand.Next();
-            return min + (next * (max - min));
+            return rand.Next(min, max);
         }
     }
 }

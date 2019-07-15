@@ -1,4 +1,5 @@
 ﻿using SwaggAndCreaturesLib.Weapons;
+using System.Collections.Generic;
 
 namespace SwaggAndCreaturesLib.Characters
 {
@@ -43,7 +44,7 @@ namespace SwaggAndCreaturesLib.Characters
             return Weapon == null ? DEFAULT_ATK : Weapon.Attack();
         }
 
-        public void Block(double amount)
+        public virtual void Block(double amount)
         {
             Health -= amount;
             if (Health < 0)
@@ -52,9 +53,9 @@ namespace SwaggAndCreaturesLib.Characters
             }
         }
 
-        public bool IsDead() => Health <= 0.0;
+        public virtual bool IsDead() => Health <= 0.0;
 
-        public void IncreaseInitiative()
+        public virtual void IncreaseInitiative()
         {
             Initiative += Agility;
             if (Initiative > MAX_INITIATIVE)
