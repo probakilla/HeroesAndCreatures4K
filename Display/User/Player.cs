@@ -11,6 +11,7 @@ namespace Display.User {
 
         public override void Play(List<ICharacter> oppositeTeam) {
             ICharacter character = GetNextToAttack();
+            character.HisTurnDisplay();
             int choice = -1;
             bool continueFlag = true;
             do {
@@ -21,6 +22,7 @@ namespace Display.User {
                 }
             } while (continueFlag);
             oppositeTeam[choice].Block(character.Attack());
+            character.Draw();
         }
 
         private int GetUserInput() {
@@ -28,14 +30,14 @@ namespace Display.User {
             int choice = -1;
             do {
                 ConsoleDisplay.DialogMessage("Please select a target: ");
-                string value = Console.ReadLine();
+                string value = AskUserInput();
                 try {
                     choice = Convert.ToInt32(value);
                     if (ValidChoice(choice)) {
                         continueFlag = false;
                     }
                 } catch {
-                    Console.WriteLine("InvalidInput");
+                    ConsoleDisplay.DialogMessage("Invalid Input !");
                 }
             } while (continueFlag);
             return choice;
@@ -49,8 +51,15 @@ namespace Display.User {
             StringBuilder builder = new StringBuilder("Turn: (");
             builder.Append(character.CharacterPlace.ToString())
                 .Append(") Attack power: ")
-                .Append(character.Power.ToString());
+                .Append((int)character.Power);
             ConsoleDisplay.InfoMessage(builder.ToString());
+        }
+
+        private string AskUserInput() {
+            Console.CursorVisible = true;
+            string value = Console.ReadLine();
+            Console.CursorVisible = false;
+            return value;
         }
     }
 }

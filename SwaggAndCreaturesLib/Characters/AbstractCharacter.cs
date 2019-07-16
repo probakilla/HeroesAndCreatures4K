@@ -66,8 +66,8 @@ namespace SwaggAndCreaturesLib.Characters {
             }
         }
 
-        public virtual void DrawCharacter() {
-            throw new NotImplementedException("Can't be draw");
-        }
+        public virtual void Draw() => throw new NotImplementedException("Can't be draw");
+
+        public virtual void HisTurnDisplay() => throw new NotImplementedException("Can't be draw");
     }
 }

@@ -25,7 +25,10 @@ namespace SwaggAndCreaturesLib.Team {
 
         public bool IsFull() => Team.Count >= TEAM_LENGTH;
 
-        public ICharacter GetNextToAttack() => Team.First(character => character.Initiative == Team.Max(c => c.Initiative));
+        public ICharacter GetNextToAttack() {
+            return Team.First(
+                    character => !character.IsDead() && character.Initiative == Team.Max(c => c.Initiative));
+        }
 
         public void IncreaseAllInitiative() => Team.ForEach(character => character.IncreaseInitiative());
     }

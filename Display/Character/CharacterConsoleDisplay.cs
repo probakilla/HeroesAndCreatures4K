@@ -61,7 +61,12 @@ namespace Display.Character {
             return CharacterPlace >= FIRST_PLAYER_CHAR && CharacterPlace <= LAST_PLAYER_CHAR;
         }
 
-        public override void DrawCharacter() {
+        public override void Draw() {
+            DrawCharacter();
+            DrawStats();
+        }
+
+        private void DrawCharacter() {
             WriteAt("(", 3, 0);
             WriteAt(CharacterPlace.ToString(), 4, 0);
             WriteAt(")", 5, 0);
@@ -76,7 +81,6 @@ namespace Display.Character {
 
             WriteAt("/", 3, 4);
             WriteAt("\\", 5, 4);
-            DrawStats();
         }
 
         private void DrawDeadStats() {
@@ -211,6 +215,12 @@ namespace Display.Character {
         private void DrawInitiative(int initiative) {
             string initiativeString = INITIATIVE_STR + Convert.ToString(initiative).PadLeft(4, ' ');
             WriteAt(initiativeString, 0, 6);
+        }
+
+        public override void HisTurnDisplay() {
+            Console.ForegroundColor = ConsoleColor.Red;
+            DrawCharacter();
+            Console.ResetColor();
         }
     }
 }

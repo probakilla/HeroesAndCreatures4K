@@ -16,8 +16,8 @@ namespace SwaggAndCreaturesLib.Fight {
 
         private void DisplayCharacter() {
             for (int i = 0; i < Computer.Team.Count; ++i) {
-                Computer.Team[i].DrawCharacter();
-                Player.Team[i].DrawCharacter();
+                Computer.Team[i].Draw();
+                Player.Team[i].Draw();
             }
         }
 

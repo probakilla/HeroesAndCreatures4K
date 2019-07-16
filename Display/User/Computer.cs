@@ -13,6 +13,7 @@ namespace Display.User {
 
         public override void Play(List<ICharacter> oppositeTeam) {
             ICharacter character = GetNextToAttack();
+            character.HisTurnDisplay();
             int choice = -1;
             bool continueFlag = true;
             do {
@@ -23,6 +24,7 @@ namespace Display.User {
             } while (continueFlag);
             WriteComputerMove(character, choice);
             oppositeTeam[choice].Block(character.Attack());
+            character.Draw();
         }
 
         private static int GenerateRandomInteger(int min, int max) {
@@ -36,7 +38,7 @@ namespace Display.User {
             builder.Append(character.CharacterPlace.ToString())
                 .Append(") attacked: (").Append(choice).Append(")");
             ConsoleDisplay.InfoMessage(builder.ToString());
-            string dialog = "With a power of: " + character.Power;
+            string dialog = "With a power of: " + (int)character.Power;
             ConsoleDisplay.DialogMessage(dialog);
             System.Threading.Thread.Sleep(DISPLAY_DELAY);
         }

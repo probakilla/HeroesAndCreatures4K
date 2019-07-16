@@ -14,6 +14,8 @@ namespace SwaggAndCreaturesLib.Characters {
         void Block(double amount);
         bool IsDead();
         void IncreaseInitiative();
-        void DrawCharacter();
+
+        void Draw();
+        void HisTurnDisplay();
     }
 }
