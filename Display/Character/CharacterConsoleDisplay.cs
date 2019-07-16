@@ -1,9 +1,8 @@
-﻿using System;
+﻿using SwaggAndCreaturesLib.Characters;
+using System;
 
-namespace SwaggAndCreaturesLib.Characters
-{
-    public class CharacterConsoleDisplay : Human
-    {
+namespace Display.Character {
+    public class CharacterConsoleDisplay : Human {
         private readonly int OrigRow = 0;
         private readonly int OrigCol = 0;
         private const int BOX_WIDTH = 9;
@@ -16,56 +15,55 @@ namespace SwaggAndCreaturesLib.Characters
         private const int WAIT_DURATION = 150;
         private const int HEALTH_WAIT_DURATION = 2;
 
+        private const string HEALTH_STR = " HP:";
+        private const string INITIATIVE_STR = "  I:";
+
         private int Abscissa;
         private int Ordinate;
-        private int CharacterNumber;
+        public override int CharacterPlace {
+            get => Place;
+            set {
+                Place = value;
+                UpdateCoordinates();
+            }
+        }
 
-        public CharacterConsoleDisplay(int health, int agility, int characterNumber) : base(health, agility)
-        {
-            CharacterNumber = characterNumber;
+        public CharacterConsoleDisplay(int health, int agility) : base(health, agility) { }
+
+        private void UpdateCoordinates() {
             CalculateOrdinate();
             CalculateAbscissa();
         }
 
-        private void CalculateOrdinate()
-        {
-            if (IsComputerCharacter())
-            {
+        private void CalculateOrdinate() {
+            if (IsComputerCharacter()) {
                 Ordinate = OrigRow;
-            }
-            else if (IsPlayerCharacter())
-            {
+            } else if (IsPlayerCharacter()) {
                 Ordinate = OrigRow + BOX_HEIGHT + FIELD_SPACE;
-            }
-            else
-            {
+            } else {
                 throw new InvalidOperationException();
             }
         }
 
-        private void CalculateAbscissa()
-        {
-            if (IsPlayerCharacter())
-            {
-                CharacterNumber = CharacterNumber - FIRST_PLAYER_CHAR;
+        private void CalculateAbscissa() {
+            int placeTmp = CharacterPlace;
+            if (IsPlayerCharacter()) {
+                placeTmp = CharacterPlace - FIRST_PLAYER_CHAR;
             }
-            Abscissa = OrigCol + (CharacterNumber * BOX_WIDTH);
+            Abscissa = OrigCol + (placeTmp * BOX_WIDTH);
         }
 
-        private bool IsComputerCharacter()
-        {
-            return CharacterNumber >= FIRST_COMPUTER_CHAR && CharacterNumber <= LAST_COMPUTER_CHAR;
+        private bool IsComputerCharacter() {
+            return CharacterPlace >= FIRST_COMPUTER_CHAR && CharacterPlace <= LAST_COMPUTER_CHAR;
         }
 
-        private bool IsPlayerCharacter()
-        {
-            return CharacterNumber >= FIRST_PLAYER_CHAR && CharacterNumber <= LAST_PLAYER_CHAR;
+        private bool IsPlayerCharacter() {
+            return CharacterPlace >= FIRST_PLAYER_CHAR && CharacterPlace <= LAST_PLAYER_CHAR;
         }
 
-        public void DrawCharacter()
-        {
+        public override void DrawCharacter() {
             WriteAt("(", 3, 0);
-            WriteAt(CharacterNumber.ToString(), 4, 0);
+            WriteAt(CharacterPlace.ToString(), 4, 0);
             WriteAt(")", 5, 0);
 
             WriteAt("O", 4, 1);
@@ -81,41 +79,33 @@ namespace SwaggAndCreaturesLib.Characters
             DrawStats();
         }
 
-        private void DrawDeadStats()
-        {
+        private void DrawDeadStats() {
             WriteAt(" HP: DEAD", 0, 5);
-            WriteAt(" I: DEAD", 0, 6);
+            WriteAt("  I: DEAD", 0, 6);
         }
 
-        private void WriteAt(string str, int x, int y)
-        {
-            try
-            {
+        private void WriteAt(string str, int x, int y) {
+            try {
                 Console.SetCursorPosition(OrigCol + (Abscissa + x), OrigRow + (Ordinate + y));
                 Console.Write(str);
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
+            } catch (ArgumentOutOfRangeException e) {
                 Console.Clear();
                 Console.WriteLine(e.Message);
             }
         }
 
-        private string GetHpString()
-        {
-            string hpString = " HP:";
+        private string GetHpString() {
+            string hpString = HEALTH_STR;
             return hpString + Health.ToString().PadLeft(4, ' ');
         }
 
-        private string GetInitiativeString()
-        {
-            string initLettre = " I:";
+        private string GetInitiativeString() {
+            string initLettre = INITIATIVE_STR;
             string initValue = Convert.ToString(Initiative).PadLeft(4, ' ');
             return initLettre + initValue;
         }
 
-        private void GetHitAnimation()
-        {
+        private void GetHitAnimation() {
             BlinkCharacter("X", 2, 4);
             BlinkCharacter("X", 3, 3);
             BlinkCharacter("X", 4, 2, "|");
@@ -123,46 +113,38 @@ namespace SwaggAndCreaturesLib.Characters
             BlinkCharacter("X", 6, 0);
         }
 
-        private void BlinkCharacter(string character, int abscissa, int ordinate, string oldCharacter = " ")
-        {
+        private void BlinkCharacter(string character, int abscissa, int ordinate, string oldCharacter = " ") {
             WriteAt(character, abscissa, ordinate);
             AnimationDelay(WAIT_DURATION);
             WriteAt(oldCharacter, abscissa, ordinate);
         }
 
-        private void AnimationDelay(int waitDuration)
-        {
+        private void AnimationDelay(int waitDuration) {
             System.Threading.Thread.Sleep(waitDuration);
         }
 
-        public override void Block(double amount)
-        {
+        public override void Block(double amount) {
             GetHitAnimation();
             int initialHp = (int)Health;
             base.Block(amount);
             HealthLossAnimation(initialHp);
         }
 
-        private void DrawHealth(int healthPoints)
-        {
-            string hpString = " HP: " + Convert.ToString(healthPoints).PadLeft(4, ' ');
-            WriteAt(hpString, Abscissa, 5);
+        private void DrawHealth(int healthPoints) {
+            string hpString = HEALTH_STR + Convert.ToString(healthPoints).PadLeft(4, ' ');
+            WriteAt(hpString, 0, 5);
         }
 
-        private void HealthLossAnimation(int initialHp)
-        {
-            while (initialHp >= (int)Health)
-            {
+        private void HealthLossAnimation(int initialHp) {
+            while (initialHp >= (int)Health) {
                 AnimationDelay(HEALTH_WAIT_DURATION);
                 DrawHealth(initialHp--);
             }
         }
 
-        public override bool IsDead()
-        {
+        public override bool IsDead() {
             bool isDead = base.IsDead();
-            if (isDead)
-            {
+            if (isDead) {
                 ClearCharacterDisplay();
                 DrawDeadStats();
                 DeadDisplay();
@@ -170,8 +152,7 @@ namespace SwaggAndCreaturesLib.Characters
             return isDead;
         }
 
-        private void DeadDisplay()
-        {
+        private void DeadDisplay() {
             WriteAt("_", 2, 0);
             WriteAt("_", 3, 0);
             WriteAt("_", 4, 0);
@@ -199,8 +180,7 @@ namespace SwaggAndCreaturesLib.Characters
             WriteAt("|", 1, 4);
         }
 
-        public void ClearCharacterDisplay()
-        {
+        public void ClearCharacterDisplay() {
             WriteAt(" ", 4, 1);
 
             WriteAt(" ", 3, 2);
@@ -213,26 +193,24 @@ namespace SwaggAndCreaturesLib.Characters
             WriteAt(" ", 5, 4);
         }
 
-        private void DrawStats()
-        {
+        private void DrawStats() {
             WriteAt(GetHpString(), 0, 5);
             WriteAt(GetInitiativeString(), 0, 6);
         }
 
-        public override void IncreaseInitiative()
-        {
+        public override void IncreaseInitiative() {
             int baseInit = Initiative;
             base.IncreaseInitiative();
-            while (baseInit < Initiative)
-            {
-                DrawInitiative(baseInit++);
+            if (!IsDead()) {
+                while (baseInit < Initiative) {
+                    DrawInitiative(baseInit++);
+                }
             }
         }
 
-        private void DrawInitiative(int initiative)
-        {
-            string initiativeString = " I: " + Convert.ToString(initiative).PadLeft(4, ' ');
-            WriteAt(initiativeString, Abscissa, 6);
+        private void DrawInitiative(int initiative) {
+            string initiativeString = INITIATIVE_STR + Convert.ToString(initiative).PadLeft(4, ' ');
+            WriteAt(initiativeString, 0, 6);
         }
     }
 }

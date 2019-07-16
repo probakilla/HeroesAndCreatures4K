@@ -1,80 +1,61 @@
-﻿using SwaggAndCreaturesLib.Characters;
-using SwaggAndCreaturesLib.User;
+﻿using SwaggAndCreaturesLib.User;
 using System.Linq;
 
-namespace SwaggAndCreaturesLib.Fight
-{
-    public struct Fight
-    {
+namespace SwaggAndCreaturesLib.Fight {
+    public struct Fight {
         private const int LIMIT_INITIATIVE = 1000;
 
         private readonly IUser Computer;
         private readonly IUser Player;
 
-        public Fight(IUser computer, IUser player)
-        {
+        public Fight(IUser computer, IUser player) {
             Computer = computer;
             Player = player;
             DisplayCharacter();
         }
 
-        public void DisplayCharacter()
-        {
-            for(int i = 0; i < Computer.Team.Count; ++i)
-            {
-                var cpu = (CharacterConsoleDisplay)Computer.Team[i];
-                cpu.DrawCharacter();
-                var player = (CharacterConsoleDisplay)Player.Team[i];
-                player.DrawCharacter();
+        public void DisplayCharacter() {
+            for (int i = 0; i < Computer.Team.Count; ++i) {
+                Computer.Team[i].DrawCharacter();
+                Player.Team[i].DrawCharacter();
             }
         }
 
-        public void StartFight()
-        {
-            while (!GameOver())
-            {
+        public void StartFight() {
+            while (!GameOver()) {
                 NextTurn();
             }
         }
 
-        private void NextTurn()
-        {
-            while (!AtLeastOneCanPlay())
-            {
+        private void NextTurn() {
+            while (!AtLeastOneCanPlay()) {
                 IncreaseAllInitiative();
             }
             NextToPlay();
         }
 
-        private void IncreaseAllInitiative()
-        {
+        private void IncreaseAllInitiative() {
             Computer.IncreaseAllInitiative();
             Player.IncreaseAllInitiative();
         }
 
-        private bool AtLeastOneCanPlay()
-        {
+        private bool AtLeastOneCanPlay() {
             int computerCharInit = Computer.GetNextToAttack().Initiative;
             int playerCharInit = Player.GetNextToAttack().Initiative;
             return computerCharInit >= LIMIT_INITIATIVE || playerCharInit >= LIMIT_INITIATIVE;
         }
 
-        private void NextToPlay()
-        {
+        private void NextToPlay() {
             int computerCharInit = Computer.GetNextToAttack().Initiative;
             int playerCharInit = Player.GetNextToAttack().Initiative;
-            if (computerCharInit > playerCharInit)
-            {
+            if (computerCharInit > playerCharInit) {
                 Computer.Play(Player.Team);
-            }
-            else
-            {
+            } else {
                 Player.Play(Computer.Team);
             }
         }
 
-        private bool GameOver()
-        {
+        private bool GameOver() {
             int playerCount = Player.Team.Where(character => !character.IsDead()).ToList().Count;
             int computerCount = Computer.Team.Where(character => !character.IsDead()).ToList().Count;
             return playerCount == 0 || computerCount == 0;

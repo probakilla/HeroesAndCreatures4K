@@ -1,7 +1,5 @@
-﻿namespace SwaggAndCreaturesLib.Weapons
-{
-    public abstract class AbstractWeapon : IWeapon
-    {
+﻿namespace SwaggAndCreaturesLib.Weapons {
+    public abstract class AbstractWeapon : IWeapon {
         private readonly double Power;
         public string Name { get; private set; }
 

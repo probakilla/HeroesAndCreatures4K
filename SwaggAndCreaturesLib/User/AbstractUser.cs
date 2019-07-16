@@ -1,23 +1,24 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using SwaggAndCreaturesLib.Characters;
+﻿using SwaggAndCreaturesLib.Characters;
+using SwaggAndCreaturesLib.Team;
+using System.Collections.Generic;
 
-namespace SwaggAndCreaturesLib.User
-{
-    public abstract class AbstractUser : IUser
-    {
-        public List<ICharacter> Team { get; private set; }
+namespace SwaggAndCreaturesLib.User {
+    public abstract class AbstractUser : IUser {
+        private readonly CharacterTeam UserTeam;
 
-        protected AbstractUser(List<ICharacter> team) => Team = team;
+        public List<ICharacter> Team {
+            get => UserTeam.Team;
+        }
 
-        public ICharacter GetNextToAttack() => Team.First(character => character.Initiative == Team.Max(c => c.Initiative));
+        protected AbstractUser(CharacterTeam team) => UserTeam = team;
 
-        public void IncreaseAllInitiative() => Team.ForEach(character => character.IncreaseInitiative());
+        public ICharacter GetNextToAttack() => UserTeam.GetNextToAttack();
+
+        public void IncreaseAllInitiative() => UserTeam.IncreaseAllInitiative();
 
         public abstract void Play(List<ICharacter> oppositeTeam);
 
-        protected bool IsTargetValid(List<ICharacter> team, int target)
-        {
+        protected bool IsTargetValid(List<ICharacter> team, int target) {
             return !team[target].IsDead();
         }
     }

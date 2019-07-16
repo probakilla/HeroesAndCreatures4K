@@ -1,7 +1,5 @@
-﻿namespace SwaggAndCreaturesLib.Weapons
-{
-    public interface IWeapon
-    {
+﻿namespace SwaggAndCreaturesLib.Weapons {
+    public interface IWeapon {
         string Name { get; }
         double Attack();
     }
