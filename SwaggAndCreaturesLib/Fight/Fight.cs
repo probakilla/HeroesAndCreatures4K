@@ -1,4 +1,5 @@
 ﻿using SwaggAndCreaturesLib.User;
+using System;
 using System.Linq;
 
 namespace SwaggAndCreaturesLib.Fight {
@@ -11,20 +12,22 @@ namespace SwaggAndCreaturesLib.Fight {
         public Fight(IUser computer, IUser player) {
             Computer = computer;
             Player = player;
-            DisplayCharacter();
         }
 
-        public void DisplayCharacter() {
+        private void DisplayCharacter() {
             for (int i = 0; i < Computer.Team.Count; ++i) {
                 Computer.Team[i].DrawCharacter();
                 Player.Team[i].DrawCharacter();
             }
         }
 
-        public void StartFight() {
+        public bool StartFight() {
+            Console.CursorVisible = false;
+            DisplayCharacter();
             while (!GameOver()) {
                 NextTurn();
             }
+            return YouWon();
         }
 
         private void NextTurn() {
@@ -59,6 +62,11 @@ namespace SwaggAndCreaturesLib.Fight {
             int playerCount = Player.Team.Where(character => !character.IsDead()).ToList().Count;
             int computerCount = Computer.Team.Where(character => !character.IsDead()).ToList().Count;
             return playerCount == 0 || computerCount == 0;
+        }
+
+        private bool YouWon() {
+            int playerCount = Player.Team.Where(character => !character.IsDead()).ToList().Count;
+            return playerCount != 0;
         }
     }
 }

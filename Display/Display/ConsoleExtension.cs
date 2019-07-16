@@ -19,12 +19,12 @@ namespace Display {
         }
 
         public static void ResetDialogLine() {
-            string emptyString = String.Empty.PadLeft(EMPTY_PADDING);
+            string emptyString = string.Empty.PadLeft(EMPTY_PADDING);
             WriteDialog(emptyString, false);
         }
 
         public static void ResetInfoLine() {
-            string emptyString = String.Empty.PadLeft(EMPTY_PADDING);
+            string emptyString = string.Empty.PadLeft(EMPTY_PADDING);
             WriteDialog(emptyString, true);
         }
 
@@ -39,15 +39,41 @@ namespace Display {
             }
         }
 
-        public static string TitleScreen() {
+        public static void TitleScreen() {
             StringBuilder builder = new StringBuilder();
             builder.Append("########################################").AppendLine()
               .Append("#    WELCOME IN HEROES AND CREATURE    #").AppendLine()
               .Append("#              4K EDITION              #").AppendLine()
               .Append("########################################").AppendLine().AppendLine()
-              .Append("Press any key to play.").AppendLine()
+              .Append("        PRESS ANY KEY TO PLAY.").AppendLine()
               .AppendLine().AppendLine();
-            return builder.ToString();
+            Console.WriteLine(builder.ToString());
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        public static void YouWonScreen() {
+            Console.Clear();
+            StringBuilder builder = new StringBuilder();
+            builder.Append(" GGGG     GGGG").AppendLine();
+            builder.Append("G        G").AppendLine();
+            builder.Append("G  GGG   G  GGG").AppendLine();
+            builder.Append("G    G   G    G").AppendLine();
+            builder.Append(" GGGG     GGGG").AppendLine();
+            Console.WriteLine(builder.ToString());
+            Console.ReadKey();
+        }
+
+        public static void YouLooseScreen() {
+            Console.Clear();
+            StringBuilder builder = new StringBuilder();
+            builder.Append(" CCCCC   H    H    EEEEE   H    H").AppendLine();
+            builder.Append("C        H    H   E        H    H").AppendLine();
+            builder.Append("C        HHHHHH   EEEE     HHHHHH").AppendLine();
+            builder.Append("C        H    H   E        H    H").AppendLine();
+            builder.Append(" CCCCC   H    H    EEEEE   H    H").AppendLine();
+            Console.WriteLine(builder.ToString());
+            Console.ReadKey();
         }
     }
 }
