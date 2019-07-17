@@ -14,7 +14,9 @@ namespace Unity4KDisplay.Generators {
             }
         }
 
-        private WeaponGenerator() => NumberGenerator = RandomNumberGenerator.GetInstance;
+        private WeaponGenerator() {
+            NumberGenerator = RandomNumberGenerator.GetInstance;
+        }
 
         public IWeapon GetRandomWeapon() {
             double power = NumberGenerator.GetRandomDouble(RandomNumberGenerator.MIN_STAT, RandomNumberGenerator.MAX_STAT);

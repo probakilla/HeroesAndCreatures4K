@@ -2,7 +2,7 @@
 using System;
 
 namespace SwaggAndCreaturesLib.Characters {
-    public abstract class AbstractCharacter : ICharacter {
+    public abstract class AbstractCharacterImplementation : ICharacter {
         private const double DEFAULT_ATK = 1;
         private const int DEFAULT_INITIATIVE = 0;
         public static readonly int MAX_INITIATIVE = 2000;
@@ -32,23 +32,31 @@ namespace SwaggAndCreaturesLib.Characters {
         protected int Place;
         public virtual int CharacterPlace { get; set; }
 
-        protected AbstractCharacter(double health, int agility) {
+        protected AbstractCharacterImplementation(double health, int agility) {
             Stats = new CharacterStats(health, agility);
             Place = -1;
         }
 
-        public void EquipWeapon(IWeapon weapon) => Weapon = weapon;
+        public void EquipWeapon(IWeapon weapon) {
+            Weapon = weapon;
+        }
 
-        public void UnequipWeapon() => Weapon = null;
+        public void UnequipWeapon() {
+            Weapon = null;
+        }
 
         public double Attack() {
             ResetInitiative();
             return HasAWeapon() ? Weapon.Attack() : DEFAULT_ATK;
         }
 
-        private void ResetInitiative() => Initiative = DEFAULT_INITIATIVE;
+        private void ResetInitiative() {
+            Initiative = DEFAULT_INITIATIVE;
+        }
 
-        private bool HasAWeapon() => Weapon != null;
+        private bool HasAWeapon() {
+            return Weapon != null;
+        }
 
         public virtual void Block(double amount) {
             Health -= amount;
@@ -57,7 +65,9 @@ namespace SwaggAndCreaturesLib.Characters {
             }
         }
 
-        public virtual bool IsDead() => Health <= 0.0;
+        public virtual bool IsDead() {
+            return Health <= 0.0;
+        }
 
         public virtual void IncreaseInitiative() {
             Initiative += Agility;
@@ -66,8 +76,12 @@ namespace SwaggAndCreaturesLib.Characters {
             }
         }
 
-        public virtual void Draw() => throw new NotImplementedException("Can't be draw");
+        public virtual void Display() {
+            throw new NotImplementedException("Can't be draw");
+        }
 
-        public virtual void HisTurnDisplay() => throw new NotImplementedException("Can't be draw");
+        public virtual void HisTurnDisplay() {
+            throw new NotImplementedException("Can't be draw");
+        }
     }
 }

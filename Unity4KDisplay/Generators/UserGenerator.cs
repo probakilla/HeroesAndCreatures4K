@@ -16,7 +16,9 @@ namespace Unity4KDisplay.Generators {
             }
         }
 
-        private UserGenerator() => TeamGenerator = TeamGenerator.GetInstance;
+        private UserGenerator() {
+            TeamGenerator = TeamGenerator.GetInstance;
+        }
 
         public IUser GetUser(bool isPlayer) {
             CharacterTeam team = TeamGenerator.GenerateRandomTeam(isPlayer);

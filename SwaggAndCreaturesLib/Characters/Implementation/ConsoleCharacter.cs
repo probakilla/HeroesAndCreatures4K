@@ -1,10 +1,10 @@
-﻿using SwaggAndCreaturesLib.Characters;
-using System;
+﻿using System;
 
-namespace Display.Character {
-    public class CharacterConsoleDisplay : Human {
+namespace SwaggAndCreaturesLib.Characters {
+    public class ConsoleCharacter : AbstractCharacterImplementation {
         private readonly int OrigRow = 0;
         private readonly int OrigCol = 0;
+
         private const int BOX_WIDTH = 9;
         private const int BOX_HEIGHT = 7;
         private const int FIELD_SPACE = 3;
@@ -14,12 +14,12 @@ namespace Display.Character {
         private const int LAST_PLAYER_CHAR = 7;
         private const int WAIT_DURATION = 150;
         private const int HEALTH_WAIT_DURATION = 2;
-
         private const string HEALTH_STR = " HP:";
         private const string INITIATIVE_STR = "  I:";
 
         private int Abscissa;
         private int Ordinate;
+
         public override int CharacterPlace {
             get => Place;
             set {
@@ -28,7 +28,7 @@ namespace Display.Character {
             }
         }
 
-        public CharacterConsoleDisplay(int health, int agility) : base(health, agility) { }
+        public ConsoleCharacter(double health, int agility) : base(health, agility) { }
 
         private void UpdateCoordinates() {
             CalculateOrdinate();
@@ -61,7 +61,7 @@ namespace Display.Character {
             return CharacterPlace >= FIRST_PLAYER_CHAR && CharacterPlace <= LAST_PLAYER_CHAR;
         }
 
-        public override void Draw() {
+        public override void Display() {
             DrawCharacter();
             DrawStats();
         }

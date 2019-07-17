@@ -11,8 +11,8 @@ namespace Display.User {
 
         public Computer(CharacterTeam team) : base(team) { }
 
-        public override void Play(List<ICharacter> oppositeTeam) {
-            ICharacter character = GetNextToAttack();
+        public override void Play(List<AbstractCharacter> oppositeTeam) {
+            AbstractCharacter character = GetNextToAttack();
             character.HisTurnDisplay();
             int choice = -1;
             bool continueFlag = true;
@@ -24,7 +24,7 @@ namespace Display.User {
             } while (continueFlag);
             WriteComputerMove(character, choice);
             oppositeTeam[choice].Block(character.Attack());
-            character.Draw();
+            character.Display();
         }
 
         private static int GenerateRandomInteger(int min, int max) {
@@ -32,7 +32,7 @@ namespace Display.User {
             return rand.Next(min, max);
         }
 
-        private static void WriteComputerMove(ICharacter character, int choice) {
+        private static void WriteComputerMove(AbstractCharacter character, int choice) {
             ConsoleDisplay.ResetDialogLine();
             StringBuilder builder = new StringBuilder("Computer move: Character (");
             builder.Append(character.CharacterPlace.ToString())

@@ -9,8 +9,8 @@ namespace Display.User {
     public class Player : AbstractUser {
         public Player(CharacterTeam team) : base(team) { }
 
-        public override void Play(List<ICharacter> oppositeTeam) {
-            ICharacter character = GetNextToAttack();
+        public override void Play(List<AbstractCharacter> oppositeTeam) {
+            AbstractCharacter character = GetNextToAttack();
             character.HisTurnDisplay();
             int choice = -1;
             bool continueFlag = true;
@@ -22,7 +22,7 @@ namespace Display.User {
                 }
             } while (continueFlag);
             oppositeTeam[choice].Block(character.Attack());
-            character.Draw();
+            character.Display();
         }
 
         private int GetUserInput() {
@@ -47,7 +47,7 @@ namespace Display.User {
             return userChoice >= 0 && userChoice <= 3;
         }
 
-        private void WriteCharacterInfo(ICharacter character) {
+        private void WriteCharacterInfo(AbstractCharacter character) {
             StringBuilder builder = new StringBuilder("Turn: (");
             builder.Append(character.CharacterPlace.ToString())
                 .Append(") Attack power: ")

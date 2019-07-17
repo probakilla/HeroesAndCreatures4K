@@ -1,5 +1,5 @@
-using Display.Character;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SwaggAndCreaturesLib.Characters;
 using SwaggAndCreaturesLib.Team;
 
 namespace UnitTests {
@@ -16,7 +16,7 @@ namespace UnitTests {
         [TestMethod]
         public void TestComputerTeamCreation() {
             for (int i = 0; i < CharacterTeam.TEAM_LENGTH; ++i) {
-                Fixture.InsertCharacter(new CharacterConsoleDisplay(i + 1, i + 1), false);
+                Fixture.InsertCharacter(new Human(i + 1, i + 1), false);
             }
             for (int i = 0; i < CharacterTeam.TEAM_LENGTH; ++i) {
                 Assert.AreEqual(i, Fixture.Team[i].CharacterPlace);
@@ -29,7 +29,7 @@ namespace UnitTests {
         [TestMethod]
         public void TestPlayerTeamCreation() {
             for (int i = 0; i < CharacterTeam.TEAM_LENGTH; ++i) {
-                Fixture.InsertCharacter(new CharacterConsoleDisplay(i + 1, i + 1), true);
+                Fixture.InsertCharacter(new Human(i + 1, i + 1), true);
             }
             for (int i = 0; i < CharacterTeam.TEAM_LENGTH; ++i) {
                 Assert.AreEqual(i + CharacterTeam.TEAM_LENGTH, Fixture.Team[i].CharacterPlace);

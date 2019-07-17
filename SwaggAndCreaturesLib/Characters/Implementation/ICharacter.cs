@@ -11,11 +11,11 @@ namespace SwaggAndCreaturesLib.Characters {
         void EquipWeapon(IWeapon weapon);
         void UnequipWeapon();
         double Attack();
+
         void Block(double amount);
         bool IsDead();
         void IncreaseInitiative();
-
-        void Draw();
+        void Display();
         void HisTurnDisplay();
     }
 }

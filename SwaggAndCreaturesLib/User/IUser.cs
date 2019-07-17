@@ -1,13 +1,12 @@
 ﻿using SwaggAndCreaturesLib.Characters;
-using SwaggAndCreaturesLib.Team;
 using System.Collections.Generic;
 
 namespace SwaggAndCreaturesLib.User {
     public interface IUser {
-        List<ICharacter> Team { get; }
+        List<AbstractCharacter> Team { get; }
 
-        ICharacter GetNextToAttack();
+        AbstractCharacter GetNextToAttack();
         void IncreaseAllInitiative();
-        void Play(List<ICharacter> oppositeTeam);
+        void Play(List<AbstractCharacter> oppositeTeam);
     }
 }

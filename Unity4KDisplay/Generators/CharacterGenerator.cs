@@ -1,5 +1,4 @@
-﻿using Display.Character;
-using SwaggAndCreaturesLib.Characters;
+﻿using SwaggAndCreaturesLib.Characters;
 
 namespace Unity4KDisplay.Generators {
     public class CharacterGenerator {
@@ -17,14 +16,14 @@ namespace Unity4KDisplay.Generators {
             }
         }
 
-        public ICharacter GetRandomCharacter() {
+        public AbstractCharacter GetRandomCharacter() {
             double health = NumberGenerator.GetRandomDouble(RandomNumberGenerator.MIN_STAT, RandomNumberGenerator.MAX_STAT);
             int agility = NumberGenerator.GetRandomInt(RandomNumberGenerator.MIN_STAT, RandomNumberGenerator.MAX_STAT);
-            return new CharacterConsoleDisplay((int)health, agility);
+            return new Human(health, agility);
         }
 
-        public ICharacter GetDefaultCharacter() {
-            return new CharacterConsoleDisplay(RandomNumberGenerator.MAX_STAT, RandomNumberGenerator.MAX_STAT);
+        public AbstractCharacter GetDefaultCharacter() {
+            return new Human(RandomNumberGenerator.MAX_STAT, RandomNumberGenerator.MAX_STAT);
         }
     }
 }

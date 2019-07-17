@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Display.Extensions;
+using System;
 using System.Text;
 
 namespace Display {
@@ -46,7 +47,7 @@ namespace Display {
               .Append("#              4K EDITION              #").AppendLine()
               .Append("########################################").AppendLine().AppendLine()
               .Append("        PRESS ANY KEY TO PLAY.").AppendLine()
-              .AppendLine().AppendLine();
+              .JumpTwoLines();
             Console.WriteLine(builder.ToString());
             Console.ReadKey();
             Console.Clear();
@@ -55,24 +56,33 @@ namespace Display {
         public static void YouWonScreen() {
             Console.Clear();
             StringBuilder builder = new StringBuilder();
-            builder.Append(" GGGG     GGGG").AppendLine();
-            builder.Append("G        G").AppendLine();
-            builder.Append("G  GGG   G  GGG").AppendLine();
-            builder.Append("G    G   G    G").AppendLine();
-            builder.Append(" GGGG     GGGG").AppendLine();
+            builder.JumpTwoLines();
+            builder.Append("    GGGG     GGGG").AppendLine();
+            builder.Append("   G        G").AppendLine();
+            builder.Append("   G  GGG   G  GGG").AppendLine();
+            builder.Append("   G    G   G    G").AppendLine();
+            builder.Append("    GGGG     GGGG").AppendLine();
+            builder.JumpTwoLines();
             Console.WriteLine(builder.ToString());
-            Console.ReadKey();
+            PressToExitBlock();
         }
 
         public static void YouLooseScreen() {
             Console.Clear();
             StringBuilder builder = new StringBuilder();
-            builder.Append(" CCCCC   H    H    EEEEE   H    H").AppendLine();
-            builder.Append("C        H    H   E        H    H").AppendLine();
-            builder.Append("C        HHHHHH   EEEE     HHHHHH").AppendLine();
-            builder.Append("C        H    H   E        H    H").AppendLine();
-            builder.Append(" CCCCC   H    H    EEEEE   H    H").AppendLine();
+            builder.JumpTwoLines();
+            builder.Append("    CCCCC   H    H    EEEEE   H    H").AppendLine();
+            builder.Append("   C        H    H   E        H    H").AppendLine();
+            builder.Append("   C        HHHHHH   EEEE     HHHHHH").AppendLine();
+            builder.Append("   C        H    H   E        H    H").AppendLine();
+            builder.Append("    CCCCC   H    H    EEEEE   H    H").AppendLine();
+            builder.JumpTwoLines();
             Console.WriteLine(builder.ToString());
+            PressToExitBlock();
+        }
+
+        private static void PressToExitBlock() {
+            Console.WriteLine("Press any key to exit");
             Console.ReadKey();
         }
     }

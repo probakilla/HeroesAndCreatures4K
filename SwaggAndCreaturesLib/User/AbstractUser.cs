@@ -6,19 +6,19 @@ namespace SwaggAndCreaturesLib.User {
     public abstract class AbstractUser : IUser {
         private readonly CharacterTeam UserTeam;
 
-        public List<ICharacter> Team {
+        public List<AbstractCharacter> Team {
             get => UserTeam.Team;
         }
 
         protected AbstractUser(CharacterTeam team) => UserTeam = team;
 
-        public ICharacter GetNextToAttack() => UserTeam.GetNextToAttack();
+        public AbstractCharacter GetNextToAttack() => UserTeam.GetNextToAttack();
 
         public void IncreaseAllInitiative() => UserTeam.IncreaseAllInitiative();
 
-        public abstract void Play(List<ICharacter> oppositeTeam);
+        public abstract void Play(List<AbstractCharacter> oppositeTeam);
 
-        protected bool IsTargetValid(List<ICharacter> team, int target) {
+        protected bool IsTargetValid(List<AbstractCharacter> team, int target) {
             return !team[target].IsDead();
         }
     }
