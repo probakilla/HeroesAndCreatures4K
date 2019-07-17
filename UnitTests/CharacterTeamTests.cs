@@ -8,10 +8,14 @@ namespace UnitTests {
         private CharacterTeam Fixture;
 
         [TestInitialize]
-        public void SetUp() => Fixture = new CharacterTeam();
+        public void SetUp() {
+            Fixture = new CharacterTeam();
+        }
 
         [TestCleanup]
-        public void TearDown() => Fixture = null;
+        public void TearDown() {
+            Fixture = null;
+        }
 
         [TestMethod]
         public void TestComputerTeamCreation() {
@@ -38,7 +42,5 @@ namespace UnitTests {
                 Assert.AreEqual(1, Fixture.Team[i].Power);
             }
         }
-
-
     }
 }
