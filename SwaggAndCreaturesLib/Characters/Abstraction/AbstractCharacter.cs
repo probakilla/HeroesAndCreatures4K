@@ -4,6 +4,7 @@ namespace SwaggAndCreaturesLib.Characters {
     public abstract class AbstractCharacter {
         private readonly ICharacter Implementation;
 
+        public double MaxHealth { get => Implementation.MaxHealth; }
         public double Health { get => Implementation.Health; }
         public int Agility { get => Implementation.Agility; }
         public int Initiative { get => Implementation.Initiative; }

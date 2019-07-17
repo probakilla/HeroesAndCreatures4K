@@ -105,6 +105,18 @@ namespace SwaggAndCreaturesLib.Characters {
             return hpString + healthValue.ToString().PadLeft(4, ' ');
         }
 
+        private void ChangeConsoleColorFromHealthPercentage(double currentHealth) {
+            int tier = Convert.ToInt32(MaxHealth / 3);
+            int roundedCurrentHealth = Convert.ToInt32(currentHealth);
+            if (roundedCurrentHealth <= tier) {
+                Console.ForegroundColor = ConsoleColor.Red;
+            } else if (roundedCurrentHealth > tier && roundedCurrentHealth <= tier * 2) {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+            } else {
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
+        }
+
         private string GetInitiativeString() {
             string initLettre = INITIATIVE_STR;
             string initValue = Convert.ToString(Initiative).PadLeft(4, ' ');
@@ -138,7 +150,9 @@ namespace SwaggAndCreaturesLib.Characters {
 
         private void DrawHealth(int healthPoints) {
             string hpString = HEALTH_STR + Convert.ToString(healthPoints).PadLeft(4, ' ');
+            ChangeConsoleColorFromHealthPercentage(healthPoints);
             WriteAt(hpString, 0, 5);
+            Console.ResetColor();
         }
 
         private void HealthLossAnimation(int initialHp) {
@@ -200,7 +214,9 @@ namespace SwaggAndCreaturesLib.Characters {
         }
 
         private void DrawStats() {
+            ChangeConsoleColorFromHealthPercentage(Health);
             WriteAt(GetHpString(), 0, 5);
+            Console.ResetColor();
             WriteAt(GetInitiativeString(), 0, 6);
         }
 

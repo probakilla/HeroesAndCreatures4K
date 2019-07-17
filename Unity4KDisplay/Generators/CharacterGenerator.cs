@@ -5,7 +5,9 @@ namespace Unity4KDisplay.Generators {
         private static CharacterGenerator Instance = null;
         private readonly RandomNumberGenerator NumberGenerator;
 
-        private CharacterGenerator() => NumberGenerator = RandomNumberGenerator.GetInstance;
+        private CharacterGenerator() {
+            NumberGenerator = RandomNumberGenerator.GetInstance;
+        }
 
         public static CharacterGenerator GetInstance {
             get {
@@ -17,7 +19,9 @@ namespace Unity4KDisplay.Generators {
         }
 
         public AbstractCharacter GetRandomCharacter() {
-            double health = NumberGenerator.GetRandomDouble(RandomNumberGenerator.MIN_STAT, RandomNumberGenerator.MAX_STAT);
+            double health = NumberGenerator.GetRandomDouble(
+                RandomNumberGenerator.MIN_HEALTH,
+                RandomNumberGenerator.MAX_STAT);
             int agility = NumberGenerator.GetRandomInt(RandomNumberGenerator.MIN_STAT, RandomNumberGenerator.MAX_STAT);
             return new Human(health, agility);
         }

@@ -6,6 +6,11 @@ namespace SwaggAndCreaturesLib.Characters {
         protected IWeapon Weapon = null;
         private CharacterStats Stats;
 
+        public double MaxHealth {
+            get => Stats.MaxHealth;
+            protected set => Stats.MaxHealth = value;
+        }
+
         public double Health {
             get => Stats.Health;
             protected set => Stats.Health = value;

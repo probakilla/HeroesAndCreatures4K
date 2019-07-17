@@ -2,6 +2,7 @@
 
 namespace SwaggAndCreaturesLib.Characters {
     internal interface ICharacter {
+        double MaxHealth { get; }
         double Health { get; }
         int Agility { get; }
         int Initiative { get; }

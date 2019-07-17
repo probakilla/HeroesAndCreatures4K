@@ -3,6 +3,7 @@
 namespace Unity4KDisplay.Generators {
     public class RandomNumberGenerator {
         public static readonly int MIN_STAT = 0;
+        public static readonly int MIN_HEALTH = 20;
         public static readonly int MAX_STAT = 100;
 
         private static RandomNumberGenerator Insatnce = null;
