@@ -2,7 +2,7 @@
 using System;
 using System.Text;
 
-namespace Display {
+namespace Display.Screens {
     public struct ConsoleDisplay {
         public void DialogMessage(string message) {
             ResetDialogLine();

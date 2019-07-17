@@ -1,5 +1,5 @@
-﻿using Display;
-using Display.Display;
+﻿using Display.Extensions;
+using Display.Screens;
 using SwaggAndCreaturesLib.Characters;
 using SwaggAndCreaturesLib.Team;
 using System;
@@ -39,9 +39,9 @@ namespace SwaggAndCreaturesLib.User {
                         return keyInfo.GetKeyInt();
                     }
                 } catch {
-                    Display.DialogMessage("Invalid Input ! (Number between 0-3) ");
+                    Display.DialogMessage("  Invalid Input ! (Number between 0-3) ");
                 }
-                Display.DialogMessage("Invalid Input ! (Number between 0-3) ");
+                Display.DialogMessage("  Invalid Input ! (Number between 0-3) ");
             } while (true);
         }
 

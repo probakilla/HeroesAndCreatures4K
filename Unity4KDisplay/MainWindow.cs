@@ -1,8 +1,6 @@
-﻿using Display;
-using Display.Display;
+﻿using Display.Screens;
 using SwaggAndCreaturesLib.Fight;
 using System;
-using System.Threading;
 using Unity4KDisplay.Generators;
 
 namespace Unity4KDisplay {
@@ -27,6 +25,9 @@ namespace Unity4KDisplay {
             switch (choice) {
                 case OptionChoices.RandomFight:
                     StartRandomBattle();
+                    break;
+                case OptionChoices.Quit:
+                    Environment.Exit(0);
                     break;
             }
         }

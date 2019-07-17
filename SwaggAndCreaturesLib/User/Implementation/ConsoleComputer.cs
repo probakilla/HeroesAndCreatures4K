@@ -1,4 +1,4 @@
-﻿using Display;
+﻿using Display.Screens;
 using SwaggAndCreaturesLib.Characters;
 using SwaggAndCreaturesLib.Team;
 using System;
@@ -8,14 +8,13 @@ using System.Text;
 namespace SwaggAndCreaturesLib.User {
     public class ConsoleComputer : AbstractUserImpl {
         private static readonly ConsoleDisplay Display = new ConsoleDisplay();
-        private const int DISPLAY_DELAY = 1500;
 
         public ConsoleComputer(CharacterTeam team) : base(team) { }
 
         public override void Play(List<AbstractCharacter> oppositeTeam) {
             AbstractCharacter character = GetNextToAttack();
             character.HisTurnDisplay();
-            int choice = UserConsts.ImpossibleUserChoice;
+            int choice;
             bool continueFlag = true;
             do {
                 choice = GenerateRandomInteger(0, oppositeTeam.Count);
@@ -37,11 +36,11 @@ namespace SwaggAndCreaturesLib.User {
             Display.ResetDialogLine();
             StringBuilder builder = new StringBuilder("Computer move: Character (");
             builder.Append(character.CharacterPlace.ToString())
-                .Append(") attacked: (").Append(choice).Append(")");
+                .Append(") attacked: (").Append(choice + TeamConsts.MaxTeamLength).Append(")");
             Display.InfoMessage(builder.ToString());
             string dialog = "With a power of: " + (int)character.Power;
             Display.DialogMessage(dialog);
-            System.Threading.Thread.Sleep(DISPLAY_DELAY);
+            System.Threading.Thread.Sleep(UserConsts.WaitAfterActionTime);
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Display.Screens;
+using System;
 
-namespace Display.Display {
+namespace Display.Extensions {
     public static class ConsoleKeyInfoExtension {
         public static bool IsValidOption(this ConsoleKeyInfo keyInfo) {
-            return keyInfo.Key == ConsoleKey.D1;
+            return keyInfo.Key == ConsoleKey.D1 || keyInfo.Key == ConsoleKey.Q;
         }
 
         public static bool IsValidTargetChoice(this ConsoleKeyInfo keyInfo) {
@@ -16,9 +17,11 @@ namespace Display.Display {
         }
 
         public static OptionChoices ToOptionChoices(this ConsoleKeyInfo keyInfo) {
-            switch(keyInfo.GetKeyInt()) {
-                case 1:
+            switch(keyInfo.Key) {
+                case ConsoleKey.D1:
                     return OptionChoices.RandomFight;
+                case ConsoleKey.Q:
+                    return OptionChoices.Quit;
                 default:
                     return OptionChoices.Unrecognized;
             }

@@ -3,13 +3,13 @@ using System;
 using System.Text;
 using System.Threading;
 
-namespace Display.Display {
+namespace Display.Screens {
     public enum OptionChoices {
-        RandomFight, Unrecognized
+        RandomFight, Quit, Unrecognized
     };
     public class SelectOptionScreen {
         private ConsoleDisplay Display = new ConsoleDisplay();
-        private static int SleepTime = 2000;
+        private static readonly int SleepTime = 2000;
 
         public void HomeScreen() {
             StringBuilder builder = new StringBuilder();
@@ -22,7 +22,8 @@ namespace Display.Display {
 
         private void OptionsToSelect() {
             StringBuilder builder = new StringBuilder();
-            builder.Append("   1 - RANDOM FIGHT").AppendLine();
+            builder.Append("   1 - RANDOM FIGHT").AppendLine().AppendLine();
+            builder.Append("   Q - QUIT").AppendLine();
             Console.WriteLine(builder.ToString());
         }
 
