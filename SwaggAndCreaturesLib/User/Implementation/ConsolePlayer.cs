@@ -1,4 +1,5 @@
 ﻿using Display;
+using Display.Display;
 using SwaggAndCreaturesLib.Characters;
 using SwaggAndCreaturesLib.Team;
 using System;
@@ -7,18 +8,23 @@ using System.Text;
 
 namespace SwaggAndCreaturesLib.User {
     public class ConsolePlayer : AbstractUserImpl {
+        private readonly ConsoleDisplay Display = new ConsoleDisplay();
+
         public ConsolePlayer(CharacterTeam team) : base(team) { }
 
         public override void Play(List<AbstractCharacter> oppositeTeam) {
+            Display.DialogMessage("Please select a target ");
             AbstractCharacter character = GetNextToAttack();
             character.HisTurnDisplay();
-            int choice = -1;
+            int choice;
             bool continueFlag = true;
             do {
                 WriteCharacterInfo(character);
                 choice = GetUserInput();
                 if (IsTargetValid(oppositeTeam, choice)) {
                     continueFlag = false;
+                } else {
+                    Display.DialogMessage("Can't attack dead characters ");
                 }
             } while (continueFlag);
             oppositeTeam[choice].Block(character.Attack());
@@ -26,40 +32,25 @@ namespace SwaggAndCreaturesLib.User {
         }
 
         private int GetUserInput() {
-            bool continueFlag = true;
-            int choice = -1;
             do {
-                ConsoleDisplay.DialogMessage("Please select a target: ");
-                string value = AskUserInput();
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 try {
-                    choice = Convert.ToInt32(value);
-                    if (ValidChoice(choice)) {
-                        continueFlag = false;
+                    if (keyInfo.IsValidTargetChoice()) {
+                        return keyInfo.GetKeyInt();
                     }
                 } catch {
-                    ConsoleDisplay.DialogMessage("Invalid Input !");
+                    Display.DialogMessage("Invalid Input ! (Number between 0-3) ");
                 }
-            } while (continueFlag);
-            return choice;
-        }
-
-        private bool ValidChoice(int userChoice) {
-            return userChoice >= 0 && userChoice <= 3;
+                Display.DialogMessage("Invalid Input ! (Number between 0-3) ");
+            } while (true);
         }
 
         private void WriteCharacterInfo(AbstractCharacter character) {
             StringBuilder builder = new StringBuilder("Turn: (");
             builder.Append(character.CharacterPlace.ToString())
                 .Append(") Attack power: ")
-                .Append((int)character.Power);
-            ConsoleDisplay.InfoMessage(builder.ToString());
-        }
-
-        private string AskUserInput() {
-            Console.CursorVisible = true;
-            string value = Console.ReadLine();
-            Console.CursorVisible = false;
-            return value;
+                .Append((int)character.Power).Append(" ");
+            Display.InfoMessage(builder.ToString());
         }
     }
 }

@@ -2,22 +2,6 @@
 
 namespace SwaggAndCreaturesLib.Characters {
     internal class ConsoleCharacter : AbstractCharacterImplementation {
-        private readonly int OrigRow = 0;
-        private readonly int OrigCol = 0;
-
-        private const int BOX_WIDTH = 9;
-        private const int BOX_HEIGHT = 7;
-        private const int FIELD_SPACE = 3;
-        private const int FIRST_COMPUTER_CHAR = 0;
-        private const int LAST_COMPUTER_CHAR = 3;
-        private const int FIRST_PLAYER_CHAR = 4;
-        private const int LAST_PLAYER_CHAR = 7;
-        private const int WAIT_DURATION = 150;
-        private const int MAX_INITIATIVE = 1000;
-        private const int HEALTH_WAIT_DURATION = 2;
-        private const string HEALTH_STR = " HP:";
-        private const string INITIATIVE_STR = "  I:";
-
         private int Abscissa;
         private int Ordinate;
 
@@ -38,9 +22,9 @@ namespace SwaggAndCreaturesLib.Characters {
 
         private void CalculateOrdinate() {
             if (IsComputerCharacter()) {
-                Ordinate = OrigRow;
+                Ordinate = DisplayConsts.OriginRow;
             } else if (IsPlayerCharacter()) {
-                Ordinate = OrigRow + BOX_HEIGHT + FIELD_SPACE;
+                Ordinate = DisplayConsts.OriginRow + DisplayConsts.BoxHeight + DisplayConsts.FieldSpace;
             } else {
                 throw new InvalidOperationException();
             }
@@ -49,17 +33,19 @@ namespace SwaggAndCreaturesLib.Characters {
         private void CalculateAbscissa() {
             int placeTmp = CharacterPlace;
             if (IsPlayerCharacter()) {
-                placeTmp = CharacterPlace - FIRST_PLAYER_CHAR;
+                placeTmp = CharacterPlace - DisplayConsts.FirstPlayerPlace;
             }
-            Abscissa = OrigCol + (placeTmp * BOX_WIDTH);
+            Abscissa = DisplayConsts.OriginColumn + (placeTmp * DisplayConsts.BoxWidth);
         }
 
         private bool IsComputerCharacter() {
-            return CharacterPlace >= FIRST_COMPUTER_CHAR && CharacterPlace <= LAST_COMPUTER_CHAR;
+            return CharacterPlace >= DisplayConsts.FirstComputerPlace &&
+                    CharacterPlace <= DisplayConsts.LastComputerPlace;
         }
 
         private bool IsPlayerCharacter() {
-            return CharacterPlace >= FIRST_PLAYER_CHAR && CharacterPlace <= LAST_PLAYER_CHAR;
+            return CharacterPlace >= DisplayConsts.FirstPlayerPlace &&
+                    CharacterPlace <= DisplayConsts.LastPlayerPlace;
         }
 
         public override void Display() {
@@ -68,30 +54,32 @@ namespace SwaggAndCreaturesLib.Characters {
         }
 
         private void DrawCharacter() {
-            WriteAt("(", 3, 0);
-            WriteAt(CharacterPlace.ToString(), 4, 0);
-            WriteAt(")", 5, 0);
+            WriteAt("(", 3, DisplayConsts.PlaceColumn);
+            WriteAt(CharacterPlace.ToString(), 4, DisplayConsts.PlaceColumn);
+            WriteAt(")", 5, DisplayConsts.PlaceColumn);
 
-            WriteAt("O", 4, 1);
+            WriteAt("O", 4, DisplayConsts.HeadColumn);
 
-            WriteAt("/", 3, 2);
-            WriteAt("|", 4, 2);
-            WriteAt("\\", 5, 2);
+            WriteAt("/", 3, DisplayConsts.ArmsColumn);
+            WriteAt("|", 4, DisplayConsts.ArmsColumn);
+            WriteAt("\\", 5, DisplayConsts.ArmsColumn);
 
-            WriteAt("|", 4, 3);
+            WriteAt("|", 4, DisplayConsts.TorsoColumn);
 
-            WriteAt("/", 3, 4);
-            WriteAt("\\", 5, 4);
+            WriteAt("/", 3, DisplayConsts.LegsColumn);
+            WriteAt("\\", 5, DisplayConsts.LegsColumn);
         }
 
         private void DrawDeadStats() {
-            WriteAt(" HP: DEAD", 0, 5);
-            WriteAt("  I: DEAD", 0, 6);
+            WriteAt(" HP: DEAD", 0, DisplayConsts.HealthColumn);
+            WriteAt("  I: DEAD", 0, DisplayConsts.InitiativeColumn);
         }
 
         private void WriteAt(string str, int x, int y) {
             try {
-                Console.SetCursorPosition(OrigCol + (Abscissa + x), OrigRow + (Ordinate + y));
+                Console.SetCursorPosition(
+                    DisplayConsts.OriginColumn + (Abscissa + x),
+                    DisplayConsts.OriginRow + (Ordinate + y));
                 Console.Write(str);
             } catch (ArgumentOutOfRangeException e) {
                 Console.Clear();
@@ -100,9 +88,8 @@ namespace SwaggAndCreaturesLib.Characters {
         }
 
         private string GetHpString() {
-            string hpString = HEALTH_STR;
             int healthValue = Convert.ToInt32(Health);
-            return hpString + healthValue.ToString().PadLeft(4, ' ');
+            return healthValue.ToString().PadLeft(DisplayConsts.MaxStatSize);
         }
 
         private void ChangeConsoleColorFromHealthPercentage(double currentHealth) {
@@ -110,7 +97,7 @@ namespace SwaggAndCreaturesLib.Characters {
             int roundedCurrentHealth = Convert.ToInt32(currentHealth);
             if (roundedCurrentHealth <= tier) {
                 Console.ForegroundColor = ConsoleColor.Red;
-            } else if (roundedCurrentHealth > tier && roundedCurrentHealth <= tier * 2) {
+            } else if (roundedCurrentHealth <= tier * 2) {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             } else {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -118,22 +105,22 @@ namespace SwaggAndCreaturesLib.Characters {
         }
 
         private string GetInitiativeString() {
-            string initLettre = INITIATIVE_STR;
-            string initValue = Convert.ToString(Initiative).PadLeft(4, ' ');
+            string initLettre = DisplayConsts.InitiativeString;
+            string initValue = Convert.ToString(Initiative).PadLeft(DisplayConsts.MaxStatSize);
             return initLettre + initValue;
         }
 
         private void GetHitAnimation() {
-            BlinkCharacter("X", 2, 4);
-            BlinkCharacter("X", 3, 3);
-            BlinkCharacter("X", 4, 2, "|");
-            BlinkCharacter("X", 5, 1);
-            BlinkCharacter("X", 6, 0);
+            BlinkCharacter("X", 2, DisplayConsts.LegsColumn);
+            BlinkCharacter("X", 3, DisplayConsts.TorsoColumn);
+            BlinkCharacter("X", 4, DisplayConsts.ArmsColumn, "|");
+            BlinkCharacter("X", 5, DisplayConsts.HeadColumn);
+            BlinkCharacter("X", 6, DisplayConsts.PlaceColumn);
         }
 
         private void BlinkCharacter(string character, int abscissa, int ordinate, string oldCharacter = " ") {
             WriteAt(character, abscissa, ordinate);
-            AnimationDelay(WAIT_DURATION);
+            AnimationDelay(DisplayConsts.BlinkWaitDuration);
             WriteAt(oldCharacter, abscissa, ordinate);
         }
 
@@ -149,15 +136,16 @@ namespace SwaggAndCreaturesLib.Characters {
         }
 
         private void DrawHealth(int healthPoints) {
-            string hpString = HEALTH_STR + Convert.ToString(healthPoints).PadLeft(4, ' ');
+            WriteAt(DisplayConsts.HealthString, 0, DisplayConsts.HealthColumn);
+            string hpString = Convert.ToString(healthPoints).PadLeft(DisplayConsts.HealthColumn);
             ChangeConsoleColorFromHealthPercentage(healthPoints);
-            WriteAt(hpString, 0, 5);
+            WriteAt(hpString, 4, DisplayConsts.HealthColumn);
             Console.ResetColor();
         }
 
         private void HealthLossAnimation(int initialHp) {
             while (initialHp >= (int)Health) {
-                AnimationDelay(HEALTH_WAIT_DURATION);
+                AnimationDelay(DisplayConsts.HealthWaitDuration);
                 DrawHealth(initialHp--);
             }
         }
@@ -173,51 +161,52 @@ namespace SwaggAndCreaturesLib.Characters {
         }
 
         private void DeadDisplay() {
-            WriteAt("_", 2, 0);
-            WriteAt("_", 3, 0);
-            WriteAt("_", 4, 0);
-            WriteAt("_", 5, 0);
-            WriteAt("_", 6, 0);
+            WriteAt("_", 2, DisplayConsts.PlaceColumn);
+            WriteAt("_", 3, DisplayConsts.PlaceColumn);
+            WriteAt("_", 4, DisplayConsts.PlaceColumn);
+            WriteAt("_", 5, DisplayConsts.PlaceColumn);
+            WriteAt("_", 6, DisplayConsts.PlaceColumn);
 
-            WriteAt("/", 1, 1);
-            WriteAt("R", 2, 1);
-            WriteAt("I", 4, 1);
-            WriteAt("P", 6, 1);
-            WriteAt("\\", 7, 1);
+            WriteAt("/", 1, DisplayConsts.HeadColumn);
+            WriteAt("R", 2, DisplayConsts.HeadColumn);
+            WriteAt("I", 4, DisplayConsts.HeadColumn);
+            WriteAt("P", 6, DisplayConsts.HeadColumn);
+            WriteAt("\\", 7, DisplayConsts.HeadColumn);
 
-            WriteAt("|", 1, 2);
-            WriteAt("_", 3, 2);
-            WriteAt("|", 4, 2);
-            WriteAt("_", 5, 2);
-            WriteAt("|", 7, 2);
+            WriteAt("|", 1, DisplayConsts.ArmsColumn);
+            WriteAt("_", 3, DisplayConsts.ArmsColumn);
+            WriteAt("|", 4, DisplayConsts.ArmsColumn);
+            WriteAt("_", 5, DisplayConsts.ArmsColumn);
+            WriteAt("|", 7, DisplayConsts.ArmsColumn);
 
-            WriteAt("|", 7, 3);
-            WriteAt("|", 4, 3);
-            WriteAt("|", 1, 3);
+            WriteAt("|", 7, DisplayConsts.TorsoColumn);
+            WriteAt("|", 4, DisplayConsts.TorsoColumn);
+            WriteAt("|", 1, DisplayConsts.TorsoColumn);
 
-            WriteAt("|", 7, 4);
-            WriteAt("|", 4, 4);
-            WriteAt("|", 1, 4);
+            WriteAt("|", 7, DisplayConsts.LegsColumn);
+            WriteAt("|", 4, DisplayConsts.LegsColumn);
+            WriteAt("|", 1, DisplayConsts.LegsColumn);
         }
 
         public void ClearCharacterDisplay() {
-            WriteAt(" ", 4, 1);
+            WriteAt(" ", 4, DisplayConsts.HeadColumn);
 
-            WriteAt(" ", 3, 2);
-            WriteAt(" ", 4, 2);
-            WriteAt(" ", 5, 2);
+            WriteAt(" ", 3, DisplayConsts.ArmsColumn);
+            WriteAt(" ", 4, DisplayConsts.ArmsColumn);
+            WriteAt(" ", 5, DisplayConsts.ArmsColumn);
 
-            WriteAt(" ", 4, 3);
+            WriteAt(" ", 4, DisplayConsts.TorsoColumn);
 
-            WriteAt(" ", 3, 4);
-            WriteAt(" ", 5, 4);
+            WriteAt(" ", 3, DisplayConsts.LegsColumn);
+            WriteAt(" ", 5, DisplayConsts.LegsColumn);
         }
 
         private void DrawStats() {
+            WriteAt(DisplayConsts.HealthString, 0, DisplayConsts.HealthColumn);
             ChangeConsoleColorFromHealthPercentage(Health);
-            WriteAt(GetHpString(), 0, 5);
+            WriteAt(GetHpString(), 4, DisplayConsts.HealthColumn);
             Console.ResetColor();
-            WriteAt(GetInitiativeString(), 0, 6);
+            WriteAt(GetInitiativeString(), 0, DisplayConsts.InitiativeColumn);
         }
 
         public override void IncreaseInitiative() {
@@ -231,15 +220,16 @@ namespace SwaggAndCreaturesLib.Characters {
         }
 
         private void DrawInitiative(int initiative) {
+            WriteAt(DisplayConsts.InitiativeString, 0, DisplayConsts.InitiativeColumn);
             int init = initiative;
-            if (initiative > MAX_INITIATIVE) {
-                init = MAX_INITIATIVE;
+            if (initiative > DisplayConsts.MaxInitiativeDisplayed) {
+                init = DisplayConsts.MaxInitiativeDisplayed;
             }
-            string initiativeString = INITIATIVE_STR + Convert.ToString(init).PadLeft(4, ' ');
-            if (init == MAX_INITIATIVE) {
+            string initiativeString = Convert.ToString(init).PadLeft(DisplayConsts.MaxStatSize);
+            if (init == DisplayConsts.MaxInitiativeDisplayed) {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
-            WriteAt(initiativeString, 0, 6);
+            WriteAt(initiativeString, 4, DisplayConsts.InitiativeColumn);
             Console.ResetColor();
         }
 

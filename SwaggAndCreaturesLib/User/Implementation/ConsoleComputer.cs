@@ -7,6 +7,7 @@ using System.Text;
 
 namespace SwaggAndCreaturesLib.User {
     public class ConsoleComputer : AbstractUserImpl {
+        private static readonly ConsoleDisplay Display = new ConsoleDisplay();
         private const int DISPLAY_DELAY = 1500;
 
         public ConsoleComputer(CharacterTeam team) : base(team) { }
@@ -14,7 +15,7 @@ namespace SwaggAndCreaturesLib.User {
         public override void Play(List<AbstractCharacter> oppositeTeam) {
             AbstractCharacter character = GetNextToAttack();
             character.HisTurnDisplay();
-            int choice = -1;
+            int choice = UserConsts.ImpossibleUserChoice;
             bool continueFlag = true;
             do {
                 choice = GenerateRandomInteger(0, oppositeTeam.Count);
@@ -33,13 +34,13 @@ namespace SwaggAndCreaturesLib.User {
         }
 
         private static void WriteComputerMove(AbstractCharacter character, int choice) {
-            ConsoleDisplay.ResetDialogLine();
+            Display.ResetDialogLine();
             StringBuilder builder = new StringBuilder("Computer move: Character (");
             builder.Append(character.CharacterPlace.ToString())
                 .Append(") attacked: (").Append(choice).Append(")");
-            ConsoleDisplay.InfoMessage(builder.ToString());
+            Display.InfoMessage(builder.ToString());
             string dialog = "With a power of: " + (int)character.Power;
-            ConsoleDisplay.DialogMessage(dialog);
+            Display.DialogMessage(dialog);
             System.Threading.Thread.Sleep(DISPLAY_DELAY);
         }
     }

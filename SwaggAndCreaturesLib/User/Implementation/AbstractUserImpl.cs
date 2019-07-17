@@ -24,7 +24,7 @@ namespace SwaggAndCreaturesLib.User {
 
         public abstract void Play(List<AbstractCharacter> oppositeTeam);
 
-        protected bool IsTargetValid(List<AbstractCharacter> team, int target) {
+        protected virtual bool IsTargetValid(List<AbstractCharacter> team, int target) {
             return !team[target].IsDead();
         }
     }
