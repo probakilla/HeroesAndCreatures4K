@@ -4,19 +4,20 @@ using System.Collections.Generic;
 
 namespace SwaggAndCreaturesLib.Team {
     public class CharacterTeam {
-        public static readonly int TEAM_LENGTH = 4;
 
         public List<AbstractCharacter> Team { get; private set; }
 
-        public CharacterTeam() => Team = new List<AbstractCharacter>();
+        public CharacterTeam() {
+            Team = new List<AbstractCharacter>();
+        }
 
         public void InsertCharacter(AbstractCharacter characterToAdd, bool isPlayerTeam) {
             if (!IsFull()) {
                 Team.Add(characterToAdd);
                 int place = Team.IndexOf(characterToAdd);
-                characterToAdd.CharacterPlace = isPlayerTeam ? place + TEAM_LENGTH : place;
+                characterToAdd.CharacterPlace = isPlayerTeam ? place + TeamConsts.MaxTeamLength : place;
             } else {
-                throw new FullTeamException("This team is full");
+                throw new FullTeamException();
             }
         }
 
@@ -25,11 +26,11 @@ namespace SwaggAndCreaturesLib.Team {
         }
 
         public bool IsFull() {
-            return Team.Count >= TEAM_LENGTH;
+            return Team.Count >= TeamConsts.MaxTeamLength;
         }
 
         public AbstractCharacter GetNextToAttack() {
-            int maxInitiative = -1;
+            int maxInitiative = TeamConsts.ImpossibleInitiative;
             AbstractCharacter choosenOne = null;
             foreach(AbstractCharacter character in Team) {
                 if (character.Initiative > maxInitiative && ! character.IsDead()) {

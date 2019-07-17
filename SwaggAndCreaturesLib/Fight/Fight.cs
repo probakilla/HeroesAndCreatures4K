@@ -4,8 +4,6 @@ using System.Linq;
 
 namespace SwaggAndCreaturesLib.Fight {
     public struct Fight {
-        private const int LIMIT_INITIATIVE = 1000;
-
         private readonly IUser Computer;
         private readonly IUser Player;
 
@@ -45,7 +43,7 @@ namespace SwaggAndCreaturesLib.Fight {
         private bool AtLeastOneCanPlay() {
             int computerCharInit = Computer.GetNextToAttack().Initiative;
             int playerCharInit = Player.GetNextToAttack().Initiative;
-            return computerCharInit >= LIMIT_INITIATIVE || playerCharInit >= LIMIT_INITIATIVE;
+            return computerCharInit >= FightConsts.InitiativeLimit || playerCharInit >= FightConsts.InitiativeLimit;
         }
 
         private void NextToPlay() {
@@ -61,12 +59,12 @@ namespace SwaggAndCreaturesLib.Fight {
         private bool GameOver() {
             int playerCount = Player.Team.Where(character => !character.IsDead()).ToList().Count;
             int computerCount = Computer.Team.Where(character => !character.IsDead()).ToList().Count;
-            return playerCount == 0 || computerCount == 0;
+            return playerCount == FightConsts.NoCharacterLeft || computerCount == FightConsts.NoCharacterLeft;
         }
 
         private bool YouWon() {
             int playerCount = Player.Team.Where(character => !character.IsDead()).ToList().Count;
-            return playerCount != 0;
+            return playerCount != FightConsts.NoCharacterLeft;
         }
     }
 }

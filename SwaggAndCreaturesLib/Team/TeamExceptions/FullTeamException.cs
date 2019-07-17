@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace SwaggAndCreaturesLib.Team.TeamExceptions {
     public class FullTeamException : Exception {
-        public FullTeamException() : base() { }
+        public FullTeamException() : base(TeamConsts.FullTeamMessage) { }
 
         public FullTeamException(string message) : base(message) { }
 
