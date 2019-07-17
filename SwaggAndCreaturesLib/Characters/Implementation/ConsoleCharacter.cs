@@ -13,6 +13,7 @@ namespace SwaggAndCreaturesLib.Characters {
         private const int FIRST_PLAYER_CHAR = 4;
         private const int LAST_PLAYER_CHAR = 7;
         private const int WAIT_DURATION = 150;
+        private const int MAX_INITIATIVE = 1000;
         private const int HEALTH_WAIT_DURATION = 2;
         private const string HEALTH_STR = " HP:";
         private const string INITIATIVE_STR = "  I:";
@@ -100,7 +101,8 @@ namespace SwaggAndCreaturesLib.Characters {
 
         private string GetHpString() {
             string hpString = HEALTH_STR;
-            return hpString + Health.ToString().PadLeft(4, ' ');
+            int healthValue = Convert.ToInt32(Health);
+            return hpString + healthValue.ToString().PadLeft(4, ' ');
         }
 
         private string GetInitiativeString() {
@@ -213,8 +215,16 @@ namespace SwaggAndCreaturesLib.Characters {
         }
 
         private void DrawInitiative(int initiative) {
-            string initiativeString = INITIATIVE_STR + Convert.ToString(initiative).PadLeft(4, ' ');
+            int init = initiative;
+            if (initiative > MAX_INITIATIVE) {
+                init = MAX_INITIATIVE;
+            }
+            string initiativeString = INITIATIVE_STR + Convert.ToString(init).PadLeft(4, ' ');
+            if (init == MAX_INITIATIVE) {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+            }
             WriteAt(initiativeString, 0, 6);
+            Console.ResetColor();
         }
 
         public override void HisTurnDisplay() {
