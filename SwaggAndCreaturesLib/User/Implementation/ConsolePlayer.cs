@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace SwaggAndCreaturesLib.User {
-    public class Player : AbstractUserImpl {
-        public Player(CharacterTeam team) : base(team) { }
+    public class ConsolePlayer : AbstractUserImpl {
+        public ConsolePlayer(CharacterTeam team) : base(team) { }
 
         public override void Play(List<AbstractCharacter> oppositeTeam) {
             AbstractCharacter character = GetNextToAttack();

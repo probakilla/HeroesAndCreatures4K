@@ -2,8 +2,8 @@
     public class AbstractUser {
         private readonly IUserImpl Implementation;
 
-        public AbstractUser() {
-
+        public AbstractUser(IUserImpl user) {
+            Implementation = user;
         }
     }
 }

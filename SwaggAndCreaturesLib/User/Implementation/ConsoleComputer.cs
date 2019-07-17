@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace SwaggAndCreaturesLib.User {
-    public class Computer : AbstractUserImpl {
+    public class ConsoleComputer : AbstractUserImpl {
         private const int DISPLAY_DELAY = 1500;
 
-        public Computer(CharacterTeam team) : base(team) { }
+        public ConsoleComputer(CharacterTeam team) : base(team) { }
 
         public override void Play(List<AbstractCharacter> oppositeTeam) {
             AbstractCharacter character = GetNextToAttack();

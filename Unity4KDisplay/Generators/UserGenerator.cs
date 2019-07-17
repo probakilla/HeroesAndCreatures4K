@@ -22,9 +22,9 @@ namespace Unity4KDisplay.Generators {
         public IUserImpl GetUser(bool isPlayer) {
             CharacterTeam team = TeamGenerator.GenerateRandomTeam(isPlayer);
             if (isPlayer) {
-                return new Player(team);
+                return new ConsolePlayer(team);
             }
-            return new Computer(team);
+            return new ConsoleComputer(team);
         }
     }
 }
