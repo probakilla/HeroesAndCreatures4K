@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace SwaggAndCreaturesLib.Characters {
-    public class ConsoleCharacter : AbstractCharacterImplementation {
+    internal class ConsoleCharacter : AbstractCharacterImplementation {
         private readonly int OrigRow = 0;
         private readonly int OrigCol = 0;
 

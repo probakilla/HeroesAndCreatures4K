@@ -7,7 +7,7 @@
         public CharacterStats(double health, int agility) {
             Health = health;
             Agility = agility;
-            Initiative = 0;
+            Initiative = CharacterConsts.DefaultInitiative;
         }
     }
 }

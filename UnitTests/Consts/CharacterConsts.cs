@@ -1,5 +1,5 @@
 ﻿namespace UnitTests.Consts {
-    public static class CharacterConsts {
+    internal static class CharacterConsts {
         public static readonly double DefaultHealth = 100.0;
         public static readonly int DefaultAgility = 10;
         public static readonly int DefaultInitiative = 0;

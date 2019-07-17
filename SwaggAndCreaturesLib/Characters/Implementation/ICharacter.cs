@@ -1,7 +1,7 @@
 ﻿using SwaggAndCreaturesLib.Weapons;
 
 namespace SwaggAndCreaturesLib.Characters {
-    public interface ICharacter {
+    internal interface ICharacter {
         double Health { get; }
         int Agility { get; }
         int Initiative { get; }

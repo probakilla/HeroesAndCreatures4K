@@ -2,11 +2,7 @@
 using System;
 
 namespace SwaggAndCreaturesLib.Characters {
-    public abstract class AbstractCharacterImplementation : ICharacter {
-        private const double DEFAULT_ATK = 1;
-        private const int DEFAULT_INITIATIVE = 0;
-        public static readonly int MAX_INITIATIVE = 2000;
-
+    internal abstract class AbstractCharacterImplementation : ICharacter {
         protected IWeapon Weapon = null;
         private CharacterStats Stats;
 
@@ -26,7 +22,7 @@ namespace SwaggAndCreaturesLib.Characters {
         }
 
         public double Power {
-            get => HasAWeapon() ? Weapon.Attack() : DEFAULT_ATK;
+            get => HasAWeapon() ? Weapon.Attack() : CharacterConsts.DefaultPower;
         }
 
         protected int Place;
@@ -34,7 +30,7 @@ namespace SwaggAndCreaturesLib.Characters {
 
         protected AbstractCharacterImplementation(double health, int agility) {
             Stats = new CharacterStats(health, agility);
-            Place = -1;
+            Place = CharacterConsts.DefaultPlace;
         }
 
         public void EquipWeapon(IWeapon weapon) {
@@ -47,11 +43,11 @@ namespace SwaggAndCreaturesLib.Characters {
 
         public double Attack() {
             ResetInitiative();
-            return HasAWeapon() ? Weapon.Attack() : DEFAULT_ATK;
+            return HasAWeapon() ? Weapon.Attack() : CharacterConsts.DefaultPower;
         }
 
         private void ResetInitiative() {
-            Initiative = DEFAULT_INITIATIVE;
+            Initiative = CharacterConsts.DefaultInitiative;
         }
 
         private bool HasAWeapon() {
@@ -60,19 +56,19 @@ namespace SwaggAndCreaturesLib.Characters {
 
         public virtual void Block(double amount) {
             Health -= amount;
-            if (Health < 0) {
-                Health = 0.0;
+            if (Health < CharacterConsts.MinHealth) {
+                Health = CharacterConsts.MinHealth;
             }
         }
 
         public virtual bool IsDead() {
-            return Health <= 0.0;
+            return Health <= CharacterConsts.MinHealth;
         }
 
         public virtual void IncreaseInitiative() {
             Initiative += Agility;
-            if (Initiative > MAX_INITIATIVE) {
-                Initiative = MAX_INITIATIVE;
+            if (Initiative > CharacterConsts.MaxInitiative) {
+                Initiative = CharacterConsts.MaxInitiative;
             }
         }
 
