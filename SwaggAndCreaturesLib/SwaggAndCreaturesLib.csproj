@@ -9,4 +9,8 @@
     <WarningsAsErrors />
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Display\Display.csproj" />
+  </ItemGroup>
+
 </Project>

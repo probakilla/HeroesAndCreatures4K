@@ -1,12 +1,12 @@
-﻿using SwaggAndCreaturesLib.Characters;
+﻿using Display;
+using SwaggAndCreaturesLib.Characters;
 using SwaggAndCreaturesLib.Team;
-using SwaggAndCreaturesLib.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Display.User {
-    public class Player : AbstractUser {
+namespace SwaggAndCreaturesLib.User {
+    public class Player : AbstractUserImpl {
         public Player(CharacterTeam team) : base(team) { }
 
         public override void Play(List<AbstractCharacter> oppositeTeam) {

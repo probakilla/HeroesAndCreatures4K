@@ -1,12 +1,12 @@
-﻿using SwaggAndCreaturesLib.Characters;
+﻿using Display;
+using SwaggAndCreaturesLib.Characters;
 using SwaggAndCreaturesLib.Team;
-using SwaggAndCreaturesLib.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Display.User {
-    public class Computer : AbstractUser {
+namespace SwaggAndCreaturesLib.User {
+    public class Computer : AbstractUserImpl {
         private const int DISPLAY_DELAY = 1500;
 
         public Computer(CharacterTeam team) : base(team) { }

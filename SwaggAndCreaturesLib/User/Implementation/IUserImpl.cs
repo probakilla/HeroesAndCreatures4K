@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace SwaggAndCreaturesLib.User {
-    public interface IUser {
+    public interface IUserImpl {
         List<AbstractCharacter> Team { get; }
 
         AbstractCharacter GetNextToAttack();

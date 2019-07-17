@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace SwaggAndCreaturesLib.Fight {
     public struct Fight {
-        private readonly IUser Computer;
-        private readonly IUser Player;
+        private readonly IUserImpl Computer;
+        private readonly IUserImpl Player;
 
-        public Fight(IUser computer, IUser player) {
+        public Fight(IUserImpl computer, IUserImpl player) {
             Computer = computer;
             Player = player;
         }

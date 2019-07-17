@@ -1,5 +1,4 @@
-﻿using Display.User;
-using SwaggAndCreaturesLib.Team;
+﻿using SwaggAndCreaturesLib.Team;
 using SwaggAndCreaturesLib.User;
 
 namespace Unity4KDisplay.Generators {
@@ -20,7 +19,7 @@ namespace Unity4KDisplay.Generators {
             TeamGenerator = TeamGenerator.GetInstance;
         }
 
-        public IUser GetUser(bool isPlayer) {
+        public IUserImpl GetUser(bool isPlayer) {
             CharacterTeam team = TeamGenerator.GenerateRandomTeam(isPlayer);
             if (isPlayer) {
                 return new Player(team);

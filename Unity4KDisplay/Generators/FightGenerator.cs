@@ -18,8 +18,8 @@ namespace Unity4KDisplay.Generators {
         private FightGenerator() => UserGenerator = UserGenerator.GetInstance;
 
         public Fight GetFight() {
-            IUser cpu = UserGenerator.GetUser(false);
-            IUser player = UserGenerator.GetUser(true);
+            IUserImpl cpu = UserGenerator.GetUser(false);
+            IUserImpl player = UserGenerator.GetUser(true);
             return new Fight(cpu, player);
         }
     }

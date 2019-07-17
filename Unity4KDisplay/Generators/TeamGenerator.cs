@@ -24,7 +24,7 @@ namespace Unity4KDisplay.Generators {
 
         public CharacterTeam GenerateRandomTeam(bool isPlayer) {
             CharacterTeam team = new CharacterTeam();
-            for (int i = 0; i < CharacterTeam.TEAM_LENGTH; ++i) {
+            for (int i = 0; i < 4; ++i) {
                 IWeapon weapon = WeaponGenerator.GetRandomWeapon();
                 AbstractCharacter character = CharGenerator.GetRandomCharacter();
                 character.EquipWeapon(weapon);
