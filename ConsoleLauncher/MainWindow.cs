@@ -26,10 +26,19 @@ namespace Unity4KDisplay {
                 case OptionChoices.RandomFight:
                     StartRandomBattle();
                     break;
+                case OptionChoices.TeamBuilder:
+                    TmpTeamBuilderScreen();
+                    break;
                 case OptionChoices.Quit:
                     Environment.Exit(0);
                     break;
             }
+        }
+
+        private static void TmpTeamBuilderScreen() {
+            Console.Clear();
+            Console.WriteLine(Environment.NewLine + "   NOT IMPLEMENTED YET");
+            Console.ReadKey();
         }
 
         private static void StartRandomBattle() {

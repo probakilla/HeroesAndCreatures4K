@@ -4,7 +4,7 @@ using System;
 namespace ConsoleDisplay.Extensions {
     public static class ConsoleKeyInfoExtension {
         public static bool IsValidOption(this ConsoleKeyInfo keyInfo) {
-            return keyInfo.Key == ConsoleKey.D1 || keyInfo.Key == ConsoleKey.Q;
+            return keyInfo.Key == ConsoleKey.D1 || keyInfo.Key == ConsoleKey.Q || keyInfo.Key == ConsoleKey.D2;
         }
 
         public static bool IsValidTargetChoice(this ConsoleKeyInfo keyInfo) {
@@ -20,6 +20,8 @@ namespace ConsoleDisplay.Extensions {
             switch(keyInfo.Key) {
                 case ConsoleKey.D1:
                     return OptionChoices.RandomFight;
+                case ConsoleKey.D2:
+                    return OptionChoices.TeamBuilder;
                 case ConsoleKey.Q:
                     return OptionChoices.Quit;
                 default:

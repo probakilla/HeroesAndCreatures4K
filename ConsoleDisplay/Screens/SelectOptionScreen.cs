@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace ConsoleDisplay.Screens {
     public enum OptionChoices {
-        RandomFight, Quit, Unrecognized
+        RandomFight, TeamBuilder, Quit, Unrecognized
     };
     public class SelectOptionScreen {
         private GameDisplay Display = new GameDisplay();
@@ -14,7 +14,7 @@ namespace ConsoleDisplay.Screens {
         public void HomeScreen() {
             StringBuilder builder = new StringBuilder();
             builder.Append("     ####################################").AppendLine();
-            builder.Append("   #          SELECT ONE OPTION          #").AppendLine();
+            builder.Append("    #          SELECT AN OPTION          #").AppendLine();
             builder.Append("     ####################################").JumpTwoLines();
             Console.WriteLine(builder.ToString());
             OptionsToSelect();
@@ -22,7 +22,8 @@ namespace ConsoleDisplay.Screens {
 
         private void OptionsToSelect() {
             StringBuilder builder = new StringBuilder();
-            builder.Append("   1 - RANDOM FIGHT").AppendLine().AppendLine();
+            builder.Append("   1 - RANDOM FIGHT").AppendLine();
+            builder.Append("   2 - TEAM BUILDER").AppendLine().AppendLine();
             builder.Append("   Q - QUIT").AppendLine();
             Console.WriteLine(builder.ToString());
         }
