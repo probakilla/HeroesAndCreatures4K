@@ -2,7 +2,7 @@
 using HeroesAndCreatures.Team;
 using HeroesAndCreatures.Weapons;
 
-namespace Unity4KDisplay.Generators {
+namespace ConsoleLauncher.Generators {
     public class TeamGenerator {
         private static TeamGenerator Instance = null;
         private readonly CharacterGenerator CharGenerator;

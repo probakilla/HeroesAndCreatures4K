@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Generators\CharacterGenerator.cs" />
     <Compile Include="Generators\FightGenerator.cs" />
+    <Compile Include="Generators\GeneratorConsts.cs" />
     <Compile Include="Generators\RandomNumberGenerator.cs" />
     <Compile Include="Generators\TeamGenerator.cs" />
     <Compile Include="Generators\UserGenerator.cs" />

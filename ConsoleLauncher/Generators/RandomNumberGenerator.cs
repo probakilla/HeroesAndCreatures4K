@@ -1,10 +1,8 @@
 ﻿using System;
 
-namespace Unity4KDisplay.Generators {
+namespace ConsoleLauncher.Generators {
     public class RandomNumberGenerator {
-        public static readonly int MIN_STAT = 0;
-        public static readonly int MIN_HEALTH = 20;
-        public static readonly int MAX_STAT = 100;
+        private readonly Random Rand = new Random();
 
         private static RandomNumberGenerator Insatnce = null;
 
@@ -20,14 +18,17 @@ namespace Unity4KDisplay.Generators {
         }
 
         public double GetRandomDouble(double min, double max) {
-            Random rand = new Random();
-            double next = rand.NextDouble();
+            double next = Rand.NextDouble();
             return min + (next * (max - min));
         }
 
+        public float GetRandomFloat(float min, float max) {
+            double next = GetRandomDouble(min, max);
+            return (float)next;
+        }
+
         public int GetRandomInt(int min, int max) {
-            Random rand = new Random();
-            return rand.Next(min, max);
+            return Rand.Next(min, max);
         }
     }
 }

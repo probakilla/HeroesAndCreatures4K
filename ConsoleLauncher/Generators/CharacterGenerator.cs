@@ -1,6 +1,6 @@
 ﻿using HeroesAndCreatures.Characters;
 
-namespace Unity4KDisplay.Generators {
+namespace ConsoleLauncher.Generators {
     public class CharacterGenerator {
         private static CharacterGenerator Instance = null;
         private readonly RandomNumberGenerator NumberGenerator;
@@ -20,14 +20,14 @@ namespace Unity4KDisplay.Generators {
 
         public AbstractCharacter GetRandomCharacter() {
             double health = NumberGenerator.GetRandomDouble(
-                RandomNumberGenerator.MIN_HEALTH,
-                RandomNumberGenerator.MAX_STAT);
-            int agility = NumberGenerator.GetRandomInt(RandomNumberGenerator.MIN_STAT, RandomNumberGenerator.MAX_STAT);
+                GeneratorConsts.MinHealth,
+                GeneratorConsts.MaxStat);
+            int agility = NumberGenerator.GetRandomInt(GeneratorConsts.MinStat, GeneratorConsts.MaxStat);
             return new Human(health, agility);
         }
 
         public AbstractCharacter GetDefaultCharacter() {
-            return new Human(RandomNumberGenerator.MAX_STAT, RandomNumberGenerator.MAX_STAT);
+            return new Human(GeneratorConsts.MaxStat, GeneratorConsts.MaxStat);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using HeroesAndCreatures.Team;
 using HeroesAndCreatures.User;
 
-namespace Unity4KDisplay.Generators {
+namespace ConsoleLauncher.Generators {
     class UserGenerator {
         private static UserGenerator Instance = null;
         private readonly TeamGenerator TeamGenerator;

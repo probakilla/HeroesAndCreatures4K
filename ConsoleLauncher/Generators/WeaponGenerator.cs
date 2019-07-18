@@ -1,6 +1,6 @@
 ﻿using HeroesAndCreatures.Weapons;
 
-namespace Unity4KDisplay.Generators {
+namespace ConsoleLauncher.Generators {
     public class WeaponGenerator {
         private static WeaponGenerator Instance = null;
         private readonly RandomNumberGenerator NumberGenerator;
@@ -19,7 +19,7 @@ namespace Unity4KDisplay.Generators {
         }
 
         public IWeapon GetRandomWeapon() {
-            double power = NumberGenerator.GetRandomDouble(RandomNumberGenerator.MIN_STAT, RandomNumberGenerator.MAX_STAT);
+            float power = NumberGenerator.GetRandomFloat(GeneratorConsts.MinStat, GeneratorConsts.MaxStat);
             return new SimpleWeapon(power);
         }
     }

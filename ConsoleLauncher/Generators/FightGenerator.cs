@@ -1,7 +1,7 @@
 ﻿using HeroesAndCreatures.Fight;
 using HeroesAndCreatures.User;
 
-namespace Unity4KDisplay.Generators {
+namespace ConsoleLauncher.Generators {
     public class FightGenerator {
         private static FightGenerator Instance = null;
         private readonly UserGenerator UserGenerator;

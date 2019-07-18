@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Characters\Abstraction\AbstractCharacter.cs" />
     <Compile Include="Characters\Abstraction\Human.cs" />
+    <Compile Include="Characters\CharacterBuilder\ICharacterBuilder.cs" />
     <Compile Include="Characters\CharacterConsts.cs" />
     <Compile Include="Characters\CharacterStats.cs" />
     <Compile Include="Characters\DisplayConsts.cs" />
@@ -70,6 +71,9 @@
     <Compile Include="Weapons\AbstractWeapon.cs" />
     <Compile Include="Weapons\IWeapon.cs" />
     <Compile Include="Weapons\SimpleWeapon.cs" />
+    <Compile Include="Weapons\WeaponBuilder\IWeaponBuilder.cs" />
+    <Compile Include="Weapons\WeaponBuilder\SimpleWeaponBuilder.cs" />
+    <Compile Include="Weapons\WeaponStats.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConsoleDisplay\ConsoleDisplay.csproj">

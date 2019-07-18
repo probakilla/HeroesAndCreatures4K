@@ -1,10 +1,22 @@
 ﻿namespace HeroesAndCreatures.Weapons {
     public abstract class AbstractWeapon : IWeapon {
-        private readonly double Power;
+        private WeaponStats Stats;
         public string Name { get; private set; }
 
-        protected AbstractWeapon(double power) => Power = power;
+        protected float Power {
+            get => Stats.Power;
+        }
 
-        public double Attack() => Power;
+        protected AbstractWeapon(float power) {
+            Stats = new WeaponStats(power);
+        }
+
+        protected AbstractWeapon(WeaponStats stats) {
+            Stats = stats;
+        }
+
+        public float Attack() {
+            return Power;
+        }
     }
 }

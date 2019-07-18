@@ -1,9 +1,9 @@
 ﻿using ConsoleDisplay.Screens;
 using HeroesAndCreatures.Fight;
 using System;
-using Unity4KDisplay.Generators;
+using ConsoleLauncher.Generators;
 
-namespace Unity4KDisplay {
+namespace ConsoleLauncher {
     public static class MainWindow {
         private static FightGenerator generator = FightGenerator.GetInstance;
         private static GameDisplay Display = new GameDisplay();
