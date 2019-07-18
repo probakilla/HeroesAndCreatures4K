@@ -1,4 +1,6 @@
 .vs/
 .vscode/
+TestResults/
+packages/
 **/bin
 **/obj
