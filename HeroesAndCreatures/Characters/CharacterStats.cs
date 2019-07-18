@@ -1,11 +1,11 @@
 ﻿namespace HeroesAndCreatures.Characters {
     public struct CharacterStats {
-        public double MaxHealth { get; set; }
-        public double Health { get; set; }
+        public float MaxHealth { get; set; }
+        public float Health { get; set; }
         public int Agility { get; set; }
         public int Initiative { get; set; }
 
-        public CharacterStats(double health, int agility) {
+        public CharacterStats(float health, int agility) {
             MaxHealth = health;
             Health = health;
             Agility = agility;

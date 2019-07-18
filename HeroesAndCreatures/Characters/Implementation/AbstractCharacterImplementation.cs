@@ -6,12 +6,12 @@ namespace HeroesAndCreatures.Characters {
         protected IWeapon Weapon = null;
         private CharacterStats Stats;
 
-        public double MaxHealth {
+        public float MaxHealth {
             get => Stats.MaxHealth;
             protected set => Stats.MaxHealth = value;
         }
 
-        public double Health {
+        public float Health {
             get => Stats.Health;
             protected set => Stats.Health = value;
         }
@@ -26,14 +26,14 @@ namespace HeroesAndCreatures.Characters {
             protected set => Stats.Initiative = value;
         }
 
-        public double Power {
+        public float Power {
             get => HasAWeapon() ? Weapon.Attack() : CharacterConsts.DefaultPower;
         }
 
         protected int Place;
         public virtual int CharacterPlace { get; set; }
 
-        protected AbstractCharacterImplementation(double health, int agility) {
+        protected AbstractCharacterImplementation(float health, int agility) {
             Stats = new CharacterStats(health, agility);
             Place = CharacterConsts.DefaultPlace;
         }
@@ -46,7 +46,7 @@ namespace HeroesAndCreatures.Characters {
             Weapon = null;
         }
 
-        public double Attack() {
+        public float Attack() {
             ResetInitiative();
             return HasAWeapon() ? Weapon.Attack() : CharacterConsts.DefaultPower;
         }
@@ -59,7 +59,7 @@ namespace HeroesAndCreatures.Characters {
             return Weapon != null;
         }
 
-        public virtual void Block(double amount) {
+        public virtual void Block(float amount) {
             Health -= amount;
             if (Health < CharacterConsts.MinHealth) {
                 Health = CharacterConsts.MinHealth;

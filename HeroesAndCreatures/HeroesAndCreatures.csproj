@@ -42,6 +42,9 @@
   <ItemGroup>
     <Compile Include="Characters\Abstraction\AbstractCharacter.cs" />
     <Compile Include="Characters\Abstraction\Human.cs" />
+    <Compile Include="Characters\CharacterBuilder\BuilderConsts.cs" />
+    <Compile Include="Characters\CharacterBuilder\CharacterBuilderDisplay.cs" />
+    <Compile Include="Characters\CharacterBuilder\HumanBuilder.cs" />
     <Compile Include="Characters\CharacterBuilder\ICharacterBuilder.cs" />
     <Compile Include="Characters\CharacterConsts.cs" />
     <Compile Include="Characters\CharacterStats.cs" />
@@ -53,6 +56,7 @@
     <Compile Include="Fight\FightConsts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Team\CharacterTeam.cs" />
+    <Compile Include="Team\TeamBuilder\ITeamBuilder.cs" />
     <Compile Include="Team\TeamConsts.cs" />
     <Compile Include="Team\TeamExceptions\FullTeamException.cs" />
     <Compile Include="User\Abstraction\AbstractUser.cs" />

@@ -2,11 +2,13 @@
 using HeroesAndCreatures.Fight;
 using System;
 using ConsoleLauncher.Generators;
+using HeroesAndCreatures.Characters.CharacterBuilder;
 
 namespace ConsoleLauncher {
     public static class MainWindow {
         private static FightGenerator generator = FightGenerator.GetInstance;
         private static GameDisplay Display = new GameDisplay();
+        private static CharacterBuilderDisplay BuilderDisplay = new CharacterBuilderDisplay();
         private static SelectOptionScreen SelectDisplay = new SelectOptionScreen();
 
         public static void Main(string[] args) {
@@ -27,18 +29,12 @@ namespace ConsoleLauncher {
                     StartRandomBattle();
                     break;
                 case OptionChoices.TeamBuilder:
-                    TmpTeamBuilderScreen();
+                    BuilderDisplay.CharacterBuilderHome();
                     break;
                 case OptionChoices.Quit:
                     Environment.Exit(0);
                     break;
             }
-        }
-
-        private static void TmpTeamBuilderScreen() {
-            Console.Clear();
-            Console.WriteLine(Environment.NewLine + "   NOT IMPLEMENTED YET");
-            Console.ReadKey();
         }
 
         private static void StartRandomBattle() {

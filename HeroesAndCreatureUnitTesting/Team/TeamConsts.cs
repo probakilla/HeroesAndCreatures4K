@@ -9,7 +9,7 @@
 
         public static readonly int HighestDefaultAgility = 4;
         public static readonly int HighestAgility = 50;
-        public static readonly double HighestDefaultHealth = 4;
+        public static readonly float HighestDefaultHealth = 4f;
 
         public static readonly int FirstComputerPlace = 0;
         public static readonly int SecondComputerPlace = 1;

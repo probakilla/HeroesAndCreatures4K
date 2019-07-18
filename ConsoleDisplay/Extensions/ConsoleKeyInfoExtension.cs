@@ -1,15 +1,11 @@
 ﻿using ConsoleDisplay.Screens;
 using System;
+using System.Collections.Generic;
 
 namespace ConsoleDisplay.Extensions {
     public static class ConsoleKeyInfoExtension {
         public static bool IsValidOption(this ConsoleKeyInfo keyInfo) {
             return keyInfo.Key == ConsoleKey.D1 || keyInfo.Key == ConsoleKey.Q || keyInfo.Key == ConsoleKey.D2;
-        }
-
-        public static bool IsValidTargetChoice(this ConsoleKeyInfo keyInfo) {
-            return keyInfo.Key == ConsoleKey.D0 || keyInfo.Key == ConsoleKey.D1 ||
-                keyInfo.Key == ConsoleKey.D2 || keyInfo.Key == ConsoleKey.D3;
         }
 
         public static int GetKeyInt(this ConsoleKeyInfo keyInfo) {
@@ -27,6 +23,10 @@ namespace ConsoleDisplay.Extensions {
                 default:
                     return OptionChoices.Unrecognized;
             }
+        }
+
+        public static bool IsInList(this ConsoleKeyInfo keyInfo, List<ConsoleKey> keys) {
+            return keys.Contains(keyInfo.Key);
         }
     }
 }

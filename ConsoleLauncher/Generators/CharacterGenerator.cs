@@ -19,7 +19,7 @@ namespace ConsoleLauncher.Generators {
         }
 
         public AbstractCharacter GetRandomCharacter() {
-            double health = NumberGenerator.GetRandomDouble(
+            float health = NumberGenerator.GetRandomFloat(
                 GeneratorConsts.MinHealth,
                 GeneratorConsts.MaxStat);
             int agility = NumberGenerator.GetRandomInt(GeneratorConsts.MinStat, GeneratorConsts.MaxStat);

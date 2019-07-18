@@ -84,5 +84,24 @@ namespace ConsoleDisplay.Screens {
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
         }
+
+        public static void WriteRow(string str, int row) {
+            WriteAt(str, 0, row);
+        }
+
+        public static void WriteAt(string str, int x, int y) {
+            try {
+                Console.SetCursorPosition(ConsoleConsts.OriginColumn + (x), ConsoleConsts.OriginRow + (y));
+                Console.Write(str);
+            } catch (ArgumentOutOfRangeException e) {
+                Console.Clear();
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public static void ClearRow(int row) {
+            string largeSpace = string.Empty.PadRight(ConsoleConsts.PaddingSize);
+            WriteRow(largeSpace, row);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleDisplay.Screens;
+using System;
 
 namespace HeroesAndCreatures.Characters {
     internal class ConsoleCharacter : AbstractCharacterImplementation {
@@ -13,7 +14,7 @@ namespace HeroesAndCreatures.Characters {
             }
         }
 
-        public ConsoleCharacter(double health, int agility) : base(health, agility) { }
+        public ConsoleCharacter(float health, int agility) : base(health, agility) { }
 
         private void UpdateCoordinates() {
             CalculateOrdinate();
@@ -54,37 +55,33 @@ namespace HeroesAndCreatures.Characters {
         }
 
         private void DrawCharacter() {
-            WriteAt("(", 3, DisplayConsts.PlaceColumn);
-            WriteAt(CharacterPlace.ToString(), 4, DisplayConsts.PlaceColumn);
-            WriteAt(")", 5, DisplayConsts.PlaceColumn);
+            WriteAt("(", 3, DisplayConsts.PlaceRow);
+            WriteAt(CharacterPlace.ToString(), 4, DisplayConsts.PlaceRow);
+            WriteAt(")", 5, DisplayConsts.PlaceRow);
 
-            WriteAt("O", 4, DisplayConsts.HeadColumn);
+            WriteAt("O", 4, DisplayConsts.HeadRow);
 
-            WriteAt("/", 3, DisplayConsts.ArmsColumn);
-            WriteAt("|", 4, DisplayConsts.ArmsColumn);
-            WriteAt("\\", 5, DisplayConsts.ArmsColumn);
+            WriteAt("/", 3, DisplayConsts.ArmsRow);
+            WriteAt("|", 4, DisplayConsts.ArmsRow);
+            WriteAt("\\", 5, DisplayConsts.ArmsRow);
 
-            WriteAt("|", 4, DisplayConsts.TorsoColumn);
+            WriteAt("|", 4, DisplayConsts.TorsoRow);
 
-            WriteAt("/", 3, DisplayConsts.LegsColumn);
-            WriteAt("\\", 5, DisplayConsts.LegsColumn);
+            WriteAt("/", 3, DisplayConsts.LegsRow);
+            WriteAt("\\", 5, DisplayConsts.LegsRow);
         }
 
         private void DrawDeadStats() {
-            WriteAt(" HP: DEAD", 0, DisplayConsts.HealthColumn);
-            WriteAt("  I: DEAD", 0, DisplayConsts.InitiativeColumn);
+            WriteRow(" HP: DEAD", DisplayConsts.HealthRow);
+            WriteRow("  I: DEAD", DisplayConsts.InitiativeRow);
+        }
+
+        private void WriteRow(string str, int row) {
+            WriteAt(str, DisplayConsts.OriginRow, row);
         }
 
         private void WriteAt(string str, int x, int y) {
-            try {
-                Console.SetCursorPosition(
-                    DisplayConsts.OriginColumn + (Abscissa + x),
-                    DisplayConsts.OriginRow + (Ordinate + y));
-                Console.Write(str);
-            } catch (ArgumentOutOfRangeException e) {
-                Console.Clear();
-                Console.WriteLine(e.Message);
-            }
+            GameDisplay.WriteAt(str, Abscissa + x, Ordinate + y);
         }
 
         private string GetHpString() {
@@ -92,7 +89,7 @@ namespace HeroesAndCreatures.Characters {
             return healthValue.ToString().PadLeft(DisplayConsts.MaxStatSize);
         }
 
-        private void ChangeConsoleColorFromHealthPercentage(double currentHealth) {
+        private void ChangeConsoleColorFromHealthPercentage(float currentHealth) {
             int tier = Convert.ToInt32(MaxHealth / 3);
             int roundedCurrentHealth = Convert.ToInt32(currentHealth);
             if (roundedCurrentHealth <= tier) {
@@ -111,11 +108,11 @@ namespace HeroesAndCreatures.Characters {
         }
 
         private void GetHitAnimation() {
-            BlinkCharacter("X", 2, DisplayConsts.LegsColumn);
-            BlinkCharacter("X", 3, DisplayConsts.TorsoColumn);
-            BlinkCharacter("X", 4, DisplayConsts.ArmsColumn, "|");
-            BlinkCharacter("X", 5, DisplayConsts.HeadColumn);
-            BlinkCharacter("X", 6, DisplayConsts.PlaceColumn);
+            BlinkCharacter("X", 2, DisplayConsts.LegsRow);
+            BlinkCharacter("X", 3, DisplayConsts.TorsoRow);
+            BlinkCharacter("X", 4, DisplayConsts.ArmsRow, "|");
+            BlinkCharacter("X", 5, DisplayConsts.HeadRow);
+            BlinkCharacter("X", 6, DisplayConsts.PlaceRow);
         }
 
         private void BlinkCharacter(string character, int abscissa, int ordinate, string oldCharacter = " ") {
@@ -128,7 +125,7 @@ namespace HeroesAndCreatures.Characters {
             System.Threading.Thread.Sleep(waitDuration);
         }
 
-        public override void Block(double amount) {
+        public override void Block(float amount) {
             GetHitAnimation();
             int initialHp = (int)Health;
             base.Block(amount);
@@ -136,10 +133,10 @@ namespace HeroesAndCreatures.Characters {
         }
 
         private void DrawHealth(int healthPoints) {
-            WriteAt(DisplayConsts.HealthString, 0, DisplayConsts.HealthColumn);
-            string hpString = Convert.ToString(healthPoints).PadLeft(DisplayConsts.HealthColumn);
+            WriteAt(DisplayConsts.HealthString, 0, DisplayConsts.HealthRow);
+            string hpString = Convert.ToString(healthPoints).PadLeft(DisplayConsts.HealthRow);
             ChangeConsoleColorFromHealthPercentage(healthPoints);
-            WriteAt(hpString, 4, DisplayConsts.HealthColumn);
+            WriteAt(hpString, 4, DisplayConsts.HealthRow);
             Console.ResetColor();
         }
 
@@ -161,52 +158,52 @@ namespace HeroesAndCreatures.Characters {
         }
 
         private void DeadDisplay() {
-            WriteAt("_", 2, DisplayConsts.PlaceColumn);
-            WriteAt("_", 3, DisplayConsts.PlaceColumn);
-            WriteAt("_", 4, DisplayConsts.PlaceColumn);
-            WriteAt("_", 5, DisplayConsts.PlaceColumn);
-            WriteAt("_", 6, DisplayConsts.PlaceColumn);
+            WriteAt("_", 2, DisplayConsts.PlaceRow);
+            WriteAt("_", 3, DisplayConsts.PlaceRow);
+            WriteAt("_", 4, DisplayConsts.PlaceRow);
+            WriteAt("_", 5, DisplayConsts.PlaceRow);
+            WriteAt("_", 6, DisplayConsts.PlaceRow);
 
-            WriteAt("/", 1, DisplayConsts.HeadColumn);
-            WriteAt("R", 2, DisplayConsts.HeadColumn);
-            WriteAt("I", 4, DisplayConsts.HeadColumn);
-            WriteAt("P", 6, DisplayConsts.HeadColumn);
-            WriteAt("\\", 7, DisplayConsts.HeadColumn);
+            WriteAt("/", 1, DisplayConsts.HeadRow);
+            WriteAt("R", 2, DisplayConsts.HeadRow);
+            WriteAt("I", 4, DisplayConsts.HeadRow);
+            WriteAt("P", 6, DisplayConsts.HeadRow);
+            WriteAt("\\", 7, DisplayConsts.HeadRow);
 
-            WriteAt("|", 1, DisplayConsts.ArmsColumn);
-            WriteAt("_", 3, DisplayConsts.ArmsColumn);
-            WriteAt("|", 4, DisplayConsts.ArmsColumn);
-            WriteAt("_", 5, DisplayConsts.ArmsColumn);
-            WriteAt("|", 7, DisplayConsts.ArmsColumn);
+            WriteAt("|", 1, DisplayConsts.ArmsRow);
+            WriteAt("_", 3, DisplayConsts.ArmsRow);
+            WriteAt("|", 4, DisplayConsts.ArmsRow);
+            WriteAt("_", 5, DisplayConsts.ArmsRow);
+            WriteAt("|", 7, DisplayConsts.ArmsRow);
 
-            WriteAt("|", 7, DisplayConsts.TorsoColumn);
-            WriteAt("|", 4, DisplayConsts.TorsoColumn);
-            WriteAt("|", 1, DisplayConsts.TorsoColumn);
+            WriteAt("|", 7, DisplayConsts.TorsoRow);
+            WriteAt("|", 4, DisplayConsts.TorsoRow);
+            WriteAt("|", 1, DisplayConsts.TorsoRow);
 
-            WriteAt("|", 7, DisplayConsts.LegsColumn);
-            WriteAt("|", 4, DisplayConsts.LegsColumn);
-            WriteAt("|", 1, DisplayConsts.LegsColumn);
+            WriteAt("|", 7, DisplayConsts.LegsRow);
+            WriteAt("|", 4, DisplayConsts.LegsRow);
+            WriteAt("|", 1, DisplayConsts.LegsRow);
         }
 
         public void ClearCharacterDisplay() {
-            WriteAt(" ", 4, DisplayConsts.HeadColumn);
+            WriteAt(" ", 4, DisplayConsts.HeadRow);
 
-            WriteAt(" ", 3, DisplayConsts.ArmsColumn);
-            WriteAt(" ", 4, DisplayConsts.ArmsColumn);
-            WriteAt(" ", 5, DisplayConsts.ArmsColumn);
+            WriteAt(" ", 3, DisplayConsts.ArmsRow);
+            WriteAt(" ", 4, DisplayConsts.ArmsRow);
+            WriteAt(" ", 5, DisplayConsts.ArmsRow);
 
-            WriteAt(" ", 4, DisplayConsts.TorsoColumn);
+            WriteAt(" ", 4, DisplayConsts.TorsoRow);
 
-            WriteAt(" ", 3, DisplayConsts.LegsColumn);
-            WriteAt(" ", 5, DisplayConsts.LegsColumn);
+            WriteAt(" ", 3, DisplayConsts.LegsRow);
+            WriteAt(" ", 5, DisplayConsts.LegsRow);
         }
 
         private void DrawStats() {
-            WriteAt(DisplayConsts.HealthString, 0, DisplayConsts.HealthColumn);
+            WriteAt(DisplayConsts.HealthString, 0, DisplayConsts.HealthRow);
             ChangeConsoleColorFromHealthPercentage(Health);
-            WriteAt(GetHpString(), 4, DisplayConsts.HealthColumn);
+            WriteAt(GetHpString(), 4, DisplayConsts.HealthRow);
             Console.ResetColor();
-            WriteAt(GetInitiativeString(), 0, DisplayConsts.InitiativeColumn);
+            WriteAt(GetInitiativeString(), 0, DisplayConsts.InitiativeRow);
         }
 
         public override void IncreaseInitiative() {
@@ -220,7 +217,7 @@ namespace HeroesAndCreatures.Characters {
         }
 
         private void DrawInitiative(int initiative) {
-            WriteAt(DisplayConsts.InitiativeString, 0, DisplayConsts.InitiativeColumn);
+            WriteAt(DisplayConsts.InitiativeString, 0, DisplayConsts.InitiativeRow);
             int init = initiative;
             if (initiative > DisplayConsts.MaxInitiativeDisplayed) {
                 init = DisplayConsts.MaxInitiativeDisplayed;
@@ -229,7 +226,7 @@ namespace HeroesAndCreatures.Characters {
             if (init == DisplayConsts.MaxInitiativeDisplayed) {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
-            WriteAt(initiativeString, 4, DisplayConsts.InitiativeColumn);
+            WriteAt(initiativeString, 4, DisplayConsts.InitiativeRow);
             Console.ResetColor();
         }
 

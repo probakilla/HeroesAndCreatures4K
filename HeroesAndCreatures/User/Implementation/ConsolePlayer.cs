@@ -35,7 +35,7 @@ namespace HeroesAndCreatures.User {
             do {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 try {
-                    if (keyInfo.IsValidTargetChoice()) {
+                    if (keyInfo.IsInList(UserConsts.UserTargetOptions)) {
                         return keyInfo.GetKeyInt();
                     }
                 } catch {

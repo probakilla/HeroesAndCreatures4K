@@ -2,18 +2,18 @@
 
 namespace HeroesAndCreatures.Characters {
     internal interface ICharacter {
-        double MaxHealth { get; }
-        double Health { get; }
+        float MaxHealth { get; }
+        float Health { get; }
         int Agility { get; }
         int Initiative { get; }
         int CharacterPlace { get; set; }
-        double Power { get; }
+        float Power { get; }
 
         void EquipWeapon(IWeapon weapon);
         void UnequipWeapon();
-        double Attack();
+        float Attack();
 
-        void Block(double amount);
+        void Block(float amount);
         bool IsDead();
         void IncreaseInitiative();
         void Display();

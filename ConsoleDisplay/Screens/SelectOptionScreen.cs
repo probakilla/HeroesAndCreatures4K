@@ -31,7 +31,7 @@ namespace ConsoleDisplay.Screens {
         public OptionChoices AskUserValidInput() {
             do {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                if (keyInfo.IsValidOption()) {
+                if (keyInfo.IsInList(ConsoleConsts.HomeOptions)) {
                     return keyInfo.ToOptionChoices();
                 } else {
                     Thread message = new Thread(() => FlashDisplayDialog("   Unrecognized option, please try again"));

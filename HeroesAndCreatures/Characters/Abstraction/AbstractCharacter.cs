@@ -4,17 +4,17 @@ namespace HeroesAndCreatures.Characters {
     public abstract class AbstractCharacter {
         private readonly ICharacter Implementation;
 
-        public double MaxHealth { get => Implementation.MaxHealth; }
-        public double Health { get => Implementation.Health; }
-        public int Agility { get => Implementation.Agility; }
+        public float MaxHealth { get => Implementation.MaxHealth; }
+        public float Health { get => Implementation.Health; }
+        public float Agility { get => Implementation.Agility; }
         public int Initiative { get => Implementation.Initiative; }
-        public double Power { get => Implementation.Power; }
+        public float Power { get => Implementation.Power; }
         public int CharacterPlace {
             get => Implementation.CharacterPlace;
             set => Implementation.CharacterPlace = value;
         }
 
-        protected AbstractCharacter(double health, int agility) {
+        protected AbstractCharacter(float health, int agility) {
             Implementation = new ConsoleCharacter(health, agility);
         }
 
@@ -26,11 +26,11 @@ namespace HeroesAndCreatures.Characters {
             Implementation.UnequipWeapon();
         }
 
-        public virtual double Attack() {
+        public virtual float Attack() {
             return Implementation.Attack();
         }
 
-        public virtual void Block(double amount) {
+        public virtual void Block(float amount) {
             Implementation.Block(amount);
         }
 
