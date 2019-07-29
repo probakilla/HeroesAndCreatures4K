@@ -1,4 +1,5 @@
 ﻿using HeroesAndCreatures.Fight;
+using HeroesAndCreatures.Team;
 using HeroesAndCreatures.User;
 
 namespace ConsoleLauncher.Generators {
@@ -15,11 +16,19 @@ namespace ConsoleLauncher.Generators {
             }
         }
 
-        private FightGenerator() => UserGenerator = UserGenerator.GetInstance;
+        private FightGenerator() {
+            UserGenerator = UserGenerator.GetInstance;
+        }
 
         public Fight GetFight() {
             IUserImpl cpu = UserGenerator.GetUser(false);
             IUserImpl player = UserGenerator.GetUser(true);
+            return new Fight(cpu, player);
+        }
+
+        public Fight GetFight(CharacterTeam computerTeam, CharacterTeam playerTeam) {
+            IUserImpl cpu = UserGenerator.GetUser(false, computerTeam);
+            IUserImpl player = UserGenerator.GetUser(true, playerTeam);
             return new Fight(cpu, player);
         }
     }

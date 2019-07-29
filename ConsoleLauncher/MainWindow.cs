@@ -1,15 +1,22 @@
 ﻿using ConsoleDisplay.Screens;
-using HeroesAndCreatures.Fight;
-using System;
 using ConsoleLauncher.Generators;
-using HeroesAndCreatures.Characters.CharacterBuilder;
+using HeroesAndCreatures.Fight;
+using HeroesAndCreatures.Team;
+using HeroesAndCreatures.Team.TeamBuilder;
+using System;
+using System.Collections.Generic;
 
 namespace ConsoleLauncher {
     public static class MainWindow {
         private static FightGenerator generator = FightGenerator.GetInstance;
         private static GameDisplay Display = new GameDisplay();
-        private static CharacterBuilderDisplay BuilderDisplay = new CharacterBuilderDisplay();
         private static SelectOptionScreen SelectDisplay = new SelectOptionScreen();
+
+        private static Dictionary<OptionChoices, Action> KeyAssociations = new Dictionary<OptionChoices, Action> {
+            { OptionChoices.RandomFight, delegate() { StartRandomBattle(); } },
+            { OptionChoices.TeamBuilder, delegate() { TeamBuilding();  } },
+            { OptionChoices.Quit, delegate() { Environment.Exit(0); } }
+        };
 
         public static void Main(string[] args) {
             Console.CursorVisible = false;
@@ -24,24 +31,27 @@ namespace ConsoleLauncher {
         }
 
         private static void RedirectUser(OptionChoices choice) {
-            switch (choice) {
-                case OptionChoices.RandomFight:
-                    StartRandomBattle();
-                    break;
-                case OptionChoices.TeamBuilder:
-                    BuilderDisplay.CharacterBuilderHome();
-                    break;
-                case OptionChoices.Quit:
-                    Environment.Exit(0);
-                    break;
-            }
+            KeyAssociations[choice]();
+        }
+
+        private static void TeamBuilding() {
+            TeamBuilderDisplay builderDisplay = new TeamBuilderDisplay(false);
+            CharacterTeam computerTeam = builderDisplay.TeamBuilderHome();
+            builderDisplay = new TeamBuilderDisplay(true);
+            CharacterTeam playerTeam = builderDisplay.TeamBuilderHome();
+            Console.Clear();
+            Fight fight = generator.GetFight(computerTeam, playerTeam);
+            EndFight(fight);
         }
 
         private static void StartRandomBattle() {
             Console.Clear();
             Fight fight = generator.GetFight();
-            bool youWon = fight.StartFight();
-            if (youWon) {
+            EndFight(fight);
+        }
+
+        private static void EndFight(Fight fight) {
+            if (fight.StartFight()) {
                 Display.YouWonScreen();
             } else {
                 Display.YouLooseScreen();

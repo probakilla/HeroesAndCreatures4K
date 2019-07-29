@@ -1,5 +1,6 @@
 ﻿using HeroesAndCreatures.Weapons;
 using System;
+using System.Text;
 
 namespace HeroesAndCreatures.Characters {
     internal abstract class AbstractCharacterImplementation : ICharacter {
@@ -83,6 +84,14 @@ namespace HeroesAndCreatures.Characters {
 
         public virtual void HisTurnDisplay() {
             throw new NotImplementedException("Can't be draw");
+        }
+
+        public override string ToString() {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("Health: ").Append(Stats.Health);
+            builder.Append(" Agility: ").Append(Stats.Agility);
+            builder.Append(" Weapon: ").Append(Weapon.Attack());
+            return builder.ToString();
         }
     }
 }

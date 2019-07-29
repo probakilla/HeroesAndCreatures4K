@@ -21,7 +21,9 @@
         public static readonly int LastPlayerPlace = 7;
 
         public static readonly int BlinkWaitDuration = 150;
+        public static readonly int HealthThresholdAnimation = 200;
         public static readonly int HealthWaitDuration = 20;
+        public static readonly int QuickHealthWaitDuration = 0;
 
         public static readonly string HealthString = " HP:";
         public static readonly string InitiativeString = "  I:";

@@ -141,8 +141,11 @@ namespace HeroesAndCreatures.Characters {
         }
 
         private void HealthLossAnimation(int initialHp) {
+            int waitTime = initialHp > DisplayConsts.HealthThresholdAnimation ?
+                DisplayConsts.QuickHealthWaitDuration :
+                DisplayConsts.HealthWaitDuration;
             while (initialHp >= (int)Health) {
-                AnimationDelay(DisplayConsts.HealthWaitDuration);
+                AnimationDelay(waitTime);
                 DrawHealth(initialHp--);
             }
         }

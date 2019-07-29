@@ -15,8 +15,25 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
 
         private IWeapon Weapon = null;
 
+        public HumanBuilder() {
+            CreateCharacter();
+        }
+
+        public HumanBuilder(AbstractCharacter character) {
+            CreateCharacter(character);
+        }
+
         public void CreateCharacter() {
             Stats = new CharacterStats();
+        }
+
+        private void CreateCharacter(AbstractCharacter character) {
+            Stats = new CharacterStats {
+                Agility = character.Agility,
+                Health = character.Health,
+                MaxHealth = character.MaxHealth
+            };
+            Weapon = new SimpleWeapon(character.Power);
         }
 
         public AbstractCharacter GetCharacter() {

@@ -1,4 +1,5 @@
 ﻿using HeroesAndCreatures.Weapons;
+using System.Text;
 
 namespace HeroesAndCreatures.Characters {
     public abstract class AbstractCharacter {
@@ -6,7 +7,7 @@ namespace HeroesAndCreatures.Characters {
 
         public float MaxHealth { get => Implementation.MaxHealth; }
         public float Health { get => Implementation.Health; }
-        public float Agility { get => Implementation.Agility; }
+        public int Agility { get => Implementation.Agility; }
         public int Initiative { get => Implementation.Initiative; }
         public float Power { get => Implementation.Power; }
         public int CharacterPlace {
@@ -48,6 +49,10 @@ namespace HeroesAndCreatures.Characters {
 
         public virtual void HisTurnDisplay() {
             Implementation.HisTurnDisplay();
+        }
+
+        public override string ToString() {
+            return Implementation.ToString();
         }
     }
 }

@@ -56,7 +56,9 @@
     <Compile Include="Fight\FightConsts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Team\CharacterTeam.cs" />
+    <Compile Include="Team\TeamBuilder\CharacterTeamBuilder.cs" />
     <Compile Include="Team\TeamBuilder\ITeamBuilder.cs" />
+    <Compile Include="Team\TeamBuilder\TeamBuilderDisplay.cs" />
     <Compile Include="Team\TeamConsts.cs" />
     <Compile Include="Team\TeamExceptions\FullTeamException.cs" />
     <Compile Include="User\Abstraction\AbstractUser.cs" />

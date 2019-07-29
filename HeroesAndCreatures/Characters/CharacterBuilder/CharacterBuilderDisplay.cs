@@ -7,15 +7,26 @@ using System.Collections.Generic;
 namespace HeroesAndCreatures.Characters.CharacterBuilder {
     public class CharacterBuilderDisplay {
         private readonly ICharacterBuilder Builder;
-        private readonly Dictionary<ConsoleKey, Action> KeyAssociation;
+        private Dictionary<ConsoleKey, Action> KeyAssociation;
         private bool IsBuilding = true;
+        private readonly Random Rand = new Random();
 
         public CharacterBuilderDisplay() {
             Builder = new HumanBuilder();
+            InitKeyAssociations();
+        }
+
+        public CharacterBuilderDisplay(AbstractCharacter character) {
+            Builder = new HumanBuilder(character);
+            InitKeyAssociations();
+        }
+
+        private void InitKeyAssociations() {
             KeyAssociation = new Dictionary<ConsoleKey, Action> {
                 { ConsoleKey.A, delegate() { AskUserForAgility(); } },
                 { ConsoleKey.H, delegate() { AskUserForHealth(); } },
                 { ConsoleKey.W, delegate() { AskUserForWeaponPower(); } },
+                { ConsoleKey.R, delegate() { CreateRandomCharacter(); } },
                 { ConsoleKey.F, delegate() { AskIfNotFinished(); } }
             };
         }
@@ -23,10 +34,9 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
         public AbstractCharacter CharacterBuilderHome() {
             Console.Clear();
             do {
-                GameDisplay.WriteRow(BuilderConsts.Title, BuilderConsts.TitleRow);
+                GameDisplay.WriteRow(CharacterBuilderConsts.Title, CharacterBuilderConsts.TitleRow);
                 DisplayCharacterStatistics();
-                DisplayUserDialog("   What do you want to change ?");
-                DisplayUserInfo("   A) Agility  H) Health  W) Weapon    F) Finished");
+                DisplayUserText();
                 AskUserForKey();
             } while (IsBuilding);
             return Builder.GetCharacter();
@@ -38,10 +48,14 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
             DisplayCharacterWeapon();
         }
 
+        private void DisplayUserText() {
+            DisplayUserDialog(CharacterBuilderConsts.QuestionString);
+            DisplayUserInfo(CharacterBuilderConsts.OptionsString);
+        }
+
         private void DisplayCharacterHealth() {
             string health = GetHealthString();
-            GameDisplay.ClearRow(BuilderConsts.HealthRow);
-            GameDisplay.WriteRow(health, BuilderConsts.HealthRow);
+            GameDisplay.ClearAndDisplayRow(health, CharacterBuilderConsts.HealthRow);
         }
 
         private string GetHealthString() {
@@ -50,14 +64,13 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
                 int health = Convert.ToInt32(stats.Health);
                 return $"   Health: {health.ToString()}";
             } catch {
-                return "   No health alocated";
+                return CharacterBuilderConsts.NotAllocated;
             }
         }
 
         private void DisplayCharacterAgility() {
             string agility = GetAgilityString();
-            GameDisplay.ClearRow(BuilderConsts.AgilityRow);
-            GameDisplay.WriteRow(agility, BuilderConsts.AgilityRow);
+            GameDisplay.ClearAndDisplayRow(agility, CharacterBuilderConsts.AgilityRow);
         }
 
         private string GetAgilityString() {
@@ -65,14 +78,13 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
                 CharacterStats stats = Builder.GetCharacterStats();
                 return $"   Agility: {stats.Agility.ToString()}";
             } catch {
-                return "   No Agility alocated";
+                return CharacterBuilderConsts.NotAllocated;
             }
         }
 
         private void DisplayCharacterWeapon() {
             string power = GetWeaponString();
-            GameDisplay.ClearRow(BuilderConsts.WeaponRow);
-            GameDisplay.WriteRow(power, BuilderConsts.WeaponRow);
+            GameDisplay.ClearAndDisplayRow(power, CharacterBuilderConsts.WeaponRow);
         }
 
         private string GetWeaponString() {
@@ -81,17 +93,15 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
                 int powerConverted = Convert.ToInt32(power);
                 return $"   Weapon power: {powerConverted.ToString()}";
             }
-            return "   No Weapon equiped";
+            return CharacterBuilderConsts.NotAllocated;
         }
 
         private void DisplayUserDialog(string message) {
-            GameDisplay.ClearRow(BuilderConsts.BuilderDialogLine);
-            GameDisplay.WriteRow(message, BuilderConsts.BuilderDialogLine);
+            GameDisplay.ClearAndDisplayRow(message, CharacterBuilderConsts.DialogRow);
         }
 
         private void DisplayUserInfo(string message) {
-            GameDisplay.ClearRow(BuilderConsts.BuilderSecondDialofLine);
-            GameDisplay.WriteRow(message, BuilderConsts.BuilderSecondDialofLine);
+            GameDisplay.ClearAndDisplayRow(message, CharacterBuilderConsts.SecongDialogRow);
         }
 
         private void AskUserForKey() {
@@ -99,7 +109,7 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
             ConsoleKeyInfo keyInfo;
             do {
                 keyInfo = Console.ReadKey(true);
-                if (keyInfo.IsInList(BuilderConsts.BuilderOptions)) {
+                if (keyInfo.IsInList(CharacterBuilderConsts.BuilderOptions)) {
                     continueFlag = false;
                 }
             } while (continueFlag);
@@ -112,7 +122,7 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
 
         private void AskUserForHealth() {
             bool continueFlag = true;
-            DisplayUserDialog("   Please enter a value between 0 and 9999");
+            DisplayUserDialog($"{CharacterBuilderConsts.ValuesLimitString} (Health)");
             Console.CursorVisible = true;
             do {
                 ClearChoiceAndResetCursor();
@@ -132,7 +142,7 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
 
         private void AskUserForAgility() {
             bool continueFlag = true;
-            DisplayUserDialog("   Please enter a value between 0 and 9999");
+            DisplayUserDialog($"{CharacterBuilderConsts.ValuesLimitString} (Agility)");
             Console.CursorVisible = true;
             do {
                 ClearChoiceAndResetCursor();
@@ -152,7 +162,7 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
 
         private void AskUserForWeaponPower() {
             bool continueFlag = true;
-            DisplayUserDialog("   Please enter a value between 0 and 9999");
+            DisplayUserDialog($"{CharacterBuilderConsts.ValuesLimitString} (Weapon power)");
             Console.CursorVisible = true;
             do {
                 ClearChoiceAndResetCursor();
@@ -180,8 +190,8 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
         }
 
         private void ClearChoiceAndResetCursor() {
-            GameDisplay.ClearRow(BuilderConsts.BuilderSecondDialofLine);
-            Console.SetCursorPosition(3, BuilderConsts.BuilderSecondDialofLine);
+            GameDisplay.ClearRow(CharacterBuilderConsts.SecongDialogRow);
+            Console.SetCursorPosition(3, CharacterBuilderConsts.SecongDialogRow);
         }
 
         private void FinishCreateCharacter() {
@@ -190,18 +200,22 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
 
         private void AskIfNotFinished() {
             if (!IsCharacterFinished()) {
-                DisplayUserDialog("   The character isn't properly created, abort creation ?");
-                DisplayUserInfo("   y / N");
+                DisplayAbortText();
                 IsBuilding = AskAbort();
             } else {
                 FinishCreateCharacter();
             }
         }
 
+        private void DisplayAbortText() {
+            DisplayUserDialog(CharacterBuilderConsts.AbortWarningString);
+            DisplayUserInfo(CharacterBuilderConsts.YesNoString);
+        }
+
         private bool AskAbort() {
             do {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                if (keyInfo.IsInList(BuilderConsts.AbortOptions)) {
+                if (keyInfo.IsInList(CharacterBuilderConsts.AbortOptions)) {
                     return ContinueBuilding(keyInfo.Key);
                 }
             } while (true);
@@ -214,6 +228,24 @@ namespace HeroesAndCreatures.Characters.CharacterBuilder {
         private bool IsCharacterFinished() {
             return Builder.WeaponPower != null && Builder.GetCharacterStats().Health != 0f &&
                 Builder.GetCharacterStats().Agility != 0;
+        }
+
+        private void CreateRandomCharacter() {
+            Builder.SetAgility(RandomInt());
+            Builder.SetHealth(RandomFloat());
+            IWeapon weapon = new SimpleWeapon(RandomFloat());
+            Builder.GiveWeapon(weapon);
+            IsBuilding = false;
+        }
+
+        private int RandomInt() {
+            return Rand.Next(CharacterBuilderConsts.MinStat, CharacterBuilderConsts.MaxStat);
+        }
+
+        private float RandomFloat() {
+            double next = Rand.NextDouble();
+            return (float)(CharacterBuilderConsts.MinStat +
+                (next * (CharacterBuilderConsts.MaxStat - CharacterBuilderConsts.MinStat)));
         }
     }
 }

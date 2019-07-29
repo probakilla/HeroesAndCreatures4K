@@ -1,5 +1,6 @@
 ﻿using HeroesAndCreatures.Characters;
 using HeroesAndCreatures.Team.TeamExceptions;
+using System;
 using System.Collections.Generic;
 
 namespace HeroesAndCreatures.Team {
@@ -19,6 +20,11 @@ namespace HeroesAndCreatures.Team {
             } else {
                 throw new FullTeamException();
             }
+        }
+
+        public void ReplaceCharacter(AbstractCharacter character, int place, bool isPlayerTeam) {
+            character.CharacterPlace = isPlayerTeam ? place + TeamConsts.MaxTeamLength : place;
+            Team.Insert(place, character);
         }
 
         public void RemoveCharacter(AbstractCharacter characterToRemove) {
@@ -43,6 +49,10 @@ namespace HeroesAndCreatures.Team {
 
         public void IncreaseAllInitiative() {
             Team.ForEach(character => character.IncreaseInitiative());
+        }
+
+        public bool IsInTeamRange(int place) {
+            return place >= 0 || place < TeamConsts.MaxTeamLength;
         }
     }
 }

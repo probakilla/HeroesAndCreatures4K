@@ -26,5 +26,13 @@ namespace ConsoleLauncher.Generators {
             }
             return new ConsoleComputer(team);
         }
+
+        public IUserImpl GetUser(bool isPlayer, CharacterTeam team) {
+            if (isPlayer) {
+                return new ConsolePlayer(team);
+            } else {
+                return new ConsoleComputer(team);
+            }
+        }
     }
 }

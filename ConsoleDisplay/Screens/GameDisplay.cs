@@ -103,5 +103,10 @@ namespace ConsoleDisplay.Screens {
             string largeSpace = string.Empty.PadRight(ConsoleConsts.PaddingSize);
             WriteRow(largeSpace, row);
         }
+
+        public static void ClearAndDisplayRow(string message, int row) {
+            ClearRow(row);
+            WriteRow(message, row);
+        }
     }
 }

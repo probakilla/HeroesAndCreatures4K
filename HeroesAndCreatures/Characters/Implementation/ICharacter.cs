@@ -18,5 +18,6 @@ namespace HeroesAndCreatures.Characters {
         void IncreaseInitiative();
         void Display();
         void HisTurnDisplay();
+        string ToString();
     }
 }
